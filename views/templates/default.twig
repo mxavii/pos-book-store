@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	{% block css %}	{% endblock %}
+	
+	<title>{% block title %} {% endblock %}</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- Header Navigation -->
+		{% include 'templates/partials/headerNav.twig' %}
+		<!-- Sidebar Navigation -->
+		<aside class="main-sidebar">
+			{% include 'templates/partials/sidebarNav.twig' %}
+		</aside>
+		<!-- Content -->
+		<div class="content-wrapper">
+		<section class="content-header">
+			<h1>{% block headContent %}	{% endblock %}</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li class="active">Here</li>
+			</ol>
+		</section>
+			<section class="content">
+				{% block content %}	{% endblock %}
+			</section>
+		</div>
+		<!-- Footer -->
+		{% include 'templates/partials/footer.twig' %}
+	</div>
+</body>
+</html>
+
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/demo.js"></script>
+{% block script %} {% endblock %}
