@@ -7,6 +7,7 @@ abstract class AbstractModel
 {
 	protected $table;
 	protected $db;
+	protected $column;
 
 	public function __construct($db)
 	{
@@ -23,6 +24,19 @@ abstract class AbstractModel
 		return $query->fetchAll();
 	}
 
+	public function find($column, $value)
+	{
+		$param = ':'.$column;
+		$this->db
+			 ->select($this->column)
+			 ->from($this->table)
+			 ->setParameter($param, $value)
+			 ->where($column . ' = '. $param );
+		// echo $this->db->getSQL();
+		$result = $this->db->execute();
+		return $result->fetch();
+	}
+
 	public function getById($id)
 	{
 		$this->db->select('*')
@@ -37,6 +51,8 @@ abstract class AbstractModel
 	{
 		$valuesColumn = [];
 		$valuesData = [];
+		
+			
 
 		foreach ($data as $dataKey => $dataValue) {
 			$valuesColumn[$dataKey] = ':' . $dataKey;
@@ -70,7 +86,7 @@ abstract class AbstractModel
 
 	public function softDelete($id)
 	{
-		$this->db->update($thWis->table)
+		$this->db->update($this->table)
 				 ->set('deleted', 1)
 				 ->where('id = ' . $id)
 				 ->execute();
