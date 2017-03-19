@@ -16,7 +16,7 @@ class UserController extends AbstractController
 		$datauser = $user->getAll();
 		$data['user'] = $datauser;
 
-		return $this->view->render($response, 'templates/partials/headerNav.twig', $data);
+		return $this->view->render($response, 'index.twig', $data);
 	}
 
 	// Controller Get SignIn
