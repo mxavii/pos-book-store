@@ -27,7 +27,20 @@ $container['view'] = function ($c) {
 
 	$view->addExtension(new Slim\Views\TwigExtension(
 		$c->router, $c->request->getUri())
+
+
 	);
+
+
+	$view->getEnvironment()->addGlobal('old', @$_SESSION['old']);
+	unset($_SESSION['old']);
+	$view->getEnvironment()->addGlobal('errors', @$_SESSION['errors']);
+	unset($_SESSION['errors']);
+
+	if (@$_SESSION['user']) {
+		$view->getEnvironment()->addGlobal('user', $_SESSION['user']);
+	}
+
 
 	return $view;
 };
@@ -39,5 +52,9 @@ $container['validation'] = function ($c) {
 
 	return new \Valitron\Validator($param, [], $setting['default']);
 };
+
+$ccontainer['flash'] = function ($c) {
+	return new \Slim\Flash\Messages;
+}
 
 ?>
