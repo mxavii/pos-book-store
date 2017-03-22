@@ -2,33 +2,39 @@
 
 namespace App\Controllers;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 use App\Models\UserModel;
 
 class UserController extends AbstractController
 {
 
-	public function index(Request $request, Response $response)
+	public function getProfile( $request,  $response)
 	{
 
 		$user = new UserModel($this->db);
-		$datauser = $user->getAll();
-		$data['user'] = $datauser;
+		// $datauser = $user->getAll();
+		// $data['user'] = $datauser;
 
-		return $this->view->render($response, 'index.twig', $data);
+
+		return $this->view->render($response, 'user/profile.twig');
+	}
+
+	// Controller Get SignOut
+	public function getSignOut( $request,  $response)
+	{
+		unset($_SESSION['user']);
+		return $response->withRedirect($this->router->pathFor('user.signin'));
+
 	}
 
 	// Controller Get SignIn
-	public function getSignIn(Request $request, Response $response)
+	public function getSignIn( $request,  $response)
 	{
 		return $this->view->render($response, 'user/signin.twig');
 
 	}
 
-	public function postSignIn(Request $request, Response $response)
+	public function postSignIn($request,  $response)
 	{
-		// return $this->view->render($response, 'user/signin.twig');
 		$user = new UserModel($this->db);
 		$login = $user->find('username', $request->getParam('username'));
 
@@ -39,39 +45,54 @@ class UserController extends AbstractController
 		} else {
 			if (password_verify($request->getParam('password'), $login['password'])) {
 				$_SESSION['user'] = $login;
+
+				$this->flash->addMessage('succes', 'Congratulations you have successfully logged in as admin');
 				return $response->withRedirect($this->router->pathFor('home'));
 			} else {
 				$_SESSION['errors'][] = 'Wrong Password';
 				return $response->withRedirect($this->router->pathFor('user.signin'));
 			}
 		}
-
 	}
 
 		
 
 	// Controller Get SignUp
-	public function getSignUp(Request $request, Response $response)
+	public function getSignUp( $request,  $response)
 	{
 		return $this->view->render($response, 'user/signup.twig');
 
 	}
 
 	// Controller Post SignUp
-	public function postSignUp(Request $request, Response $response)
+	public function postSignUp( $request,  $response)
 	{
 
 		$user = new UserModel($this->db);
-		$this->validation->rule('required', ['username', 'password', 'name']);
+		$this->validation->rule('required', ['username', 'password', 'name'])->message('{field} must not be empty')->label('Username', 'password', 'name');
 
 		$this->validation->rule('integer', 'id');
 
-		$this->validation->rule('lengthMax', ['username', 'name', 'password'], 20);
-		$this->validation->rule('lengthMin', ['username', 'name', 'password'], 5);
+		$this->validation->rule('alphaNum', 'username');
 
+		$this->validation->rule('lengthMax', [
+									'username',
+									'name',
+									'password'
+								], 30);
+		$this->validation->rule('lengthMin', [
+									'username',
+									'name',
+									'password'
+								], 5);
+		$thia->validation->rule('equals', [
+									'username',
+									'password'
+								]);
+		
 		if ($this->validation->validate()) {
 
-		$user->signUp($request->getParams());
+		$user->addUser($request->getParams());
 	
 		return $response->withRedirect($this->router->pathFor('user.signin'));
 

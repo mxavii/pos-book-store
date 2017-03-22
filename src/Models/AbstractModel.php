@@ -24,6 +24,16 @@ abstract class AbstractModel
 		return $query->fetchAll();
 	}
 
+	public function getAllTrash()
+	{
+		$this->db->select('*')
+				 ->from($this->table)
+				 ->where('deleted = 1');
+		$query = $this->db->execute();
+
+		return $query->fetchAll();
+	}	
+
 	public function find($column, $value)
 	{
 		$param = ':'.$column;
@@ -31,8 +41,8 @@ abstract class AbstractModel
 			 ->select($this->column)
 			 ->from($this->table)
 			 ->setParameter($param, $value)
-			 ->where($column . ' = '. $param );
-		// echo $this->db->getSQL();
+			 ->where($column . ' = '. $param);
+		echo $this->db->getSQL();
 		$result = $this->db->execute();
 		return $result->fetch();
 	}
@@ -51,9 +61,7 @@ abstract class AbstractModel
 	{
 		$valuesColumn = [];
 		$valuesData = [];
-		
 			
-
 		foreach ($data as $dataKey => $dataValue) {
 			$valuesColumn[$dataKey] = ':' . $dataKey;
 			$valuesData[$dataKey] = $dataValue;
@@ -63,6 +71,7 @@ abstract class AbstractModel
 				 ->values($valuesColumn)
 				 ->setParameters($valuesData)
 				 ->execute();
+
 	}
 
 	public function updateData(array $data, $id)
@@ -92,8 +101,16 @@ abstract class AbstractModel
 				 ->execute();
 	}
 
-	public function hardDelete($id)
+	public function restoreData($id)
 	{
+		$this->db->update($this->table)
+				 ->set('deleted', 0)
+				 ->where('id = ' . $id)
+				 ->execute();
+	}	
+
+	public function hardDelete($id)
+	{	
 		$this->db->delete($this->table)
 				 ->where('id = ' . $id)
 				 ->execute();

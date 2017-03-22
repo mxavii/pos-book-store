@@ -1,10 +1,11 @@
 <section class="sidebar">
     <div class="user-panel">
         <div class="pull-left image">
-            <img src="{{base_url()}}/assets/image/avatar.png" class="img-circle" alt="User Image">
+            <img src="http://koolkampus.co.in/wp-content/uploads/2014/02/admin.png" class="img-circle" alt="User Image">
         </div>
+        {% if user %}
         <div class="pull-left info">
-            <p>Admin</p>
+            <p>{{user.name}}</p>
             <a href="#"><i class="fa fa-circle text-success"></i> 
                 Online
             </a>
@@ -15,11 +16,11 @@
         <li class="header">HEADER</li>
         <li class="treeview">
             <a href="{{path_for('home')}}"><i class="fa ion-ios-speedometer fa-lg"></i>
-            <span>HOME</span></a>
+            <span>Home</span></a>
         </li class="treeview">
         <li>
-            <a href="#"><i class="fa ion-cube fa-lg"></i>
-            <span>SALE</span></a>
+            <a href="#"><i class="fa ion-cube "></i>
+            <span>Sale</span></a>
         </li>
         <li class="treeview">
             <a href="#"><i class="fa fa-th-large"></i>
@@ -33,5 +34,19 @@
                 <li><a href="#">List Product</a></li>
             </ul>
         </li>
+<li class="treeview">
+            <a href="#"><i class="fa fa-user-circle"></i>
+                <span>User</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="{{path_for('user.listuser')}}">List User</a></li>
+                <li><a href="{{path_for('user.adduser')}}">Add User</a></li>
+                <li><a href="{{path_for('user.trashuser')}}">Trash</a></li>
+            </ul>
+        </li>        
     </ul>
+    {% endif %}
 </section>

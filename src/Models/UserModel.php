@@ -6,9 +6,9 @@ class UserModel  extends AbstractModel
 {
 
 	protected $table = 'users';
-	protected $column = ['username', 'password'];
+	protected $column = ['id', 'username', 'password', 'name', 'create_at'];
 
-	public function signUp(array $data)
+	public function addUser(array $data)
 	{
 
 		$data = [
@@ -20,6 +20,7 @@ class UserModel  extends AbstractModel
 		];
 
 		$this->createData($data);
+		var_dump($this->createData);
 	}
 
 	public function checkDuplicate($username, $password)
@@ -33,5 +34,6 @@ class UserModel  extends AbstractModel
 		}
 		return false;
 	}
+
 }
 
