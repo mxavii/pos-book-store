@@ -29,6 +29,13 @@ $container['view'] = function ($c) {
 		$c->router, $c->request->getUri())
 	);
 
+
+	$view->getEnvironment()->addGlobal('old', @$_SESSION['old']);
+	unset($_SESSION['old']);
+
+	$view->getEnvironment()->addGlobal('errors', @$_SESSION['errors']);
+	unset($_SESSION['errors']);
+
 	return $view;
 };
 

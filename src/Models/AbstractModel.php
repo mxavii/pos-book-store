@@ -23,6 +23,16 @@ abstract class AbstractModel
 		return $query->fetchAll();
 	}
 
+	public function getInactive()
+	{
+		$this->db->select('*')
+				 ->from($this->table)
+				 ->where('deleted = 1');
+		$query = $this->db->execute();
+
+		return $query->fetchAll();
+	}
+
 	public function getById($id)
 	{
 		$this->db->select('*')
@@ -70,8 +80,16 @@ abstract class AbstractModel
 
 	public function softDelete($id)
 	{
-		$this->db->update($thWis->table)
+		$this->db->update($this->table)
 				 ->set('deleted', 1)
+				 ->where('id = ' . $id)
+				 ->execute();
+	}
+
+	public function restore($id)
+	{
+		$this->db->update($this->table)
+				 ->set('deleted', 0)
 				 ->where('id = ' . $id)
 				 ->execute();
 	}
@@ -82,7 +100,6 @@ abstract class AbstractModel
 				 ->where('id = ' . $id)
 				 ->execute();
 	}
-
 }
 
 ?>
