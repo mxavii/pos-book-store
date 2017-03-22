@@ -24,6 +24,16 @@ abstract class AbstractModel
 		return $query->fetchAll();
 	}
 
+	public function getInactive()
+	{
+		$this->db->select('*')
+				 ->from($this->table)
+				 ->where('deleted = 1');
+		$query = $this->db->execute();
+
+		return $query->fetchAll();
+	}
+
 	public function find($column, $value)
 	{
 		$param = ':'.$column;
@@ -51,8 +61,8 @@ abstract class AbstractModel
 	{
 		$valuesColumn = [];
 		$valuesData = [];
-		
-			
+
+
 
 		foreach ($data as $dataKey => $dataValue) {
 			$valuesColumn[$dataKey] = ':' . $dataKey;
@@ -92,13 +102,20 @@ abstract class AbstractModel
 				 ->execute();
 	}
 
+	public function restore($id)
+	{
+		$this->db->update($this->table)
+				 ->set('deleted', 0)
+				 ->where('id = ' . $id)
+				 ->execute();
+	}
+
 	public function hardDelete($id)
 	{
 		$this->db->delete($this->table)
 				 ->where('id = ' . $id)
 				 ->execute();
 	}
-
 }
 
 ?>
