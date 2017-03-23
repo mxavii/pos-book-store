@@ -14,7 +14,7 @@ class Product extends AbstractSeed
      */
     public function run()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5 ; $i++) {
             $data[] = [
                 'category_id'   =>  '2',
                 'title'         =>  'Test',

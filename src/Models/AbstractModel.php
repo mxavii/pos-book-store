@@ -16,7 +16,7 @@ abstract class AbstractModel
 
 	public function getAll()
 	{
-		$this->db->select('*')
+		$this->db->select($this->column)
 				 ->from($this->table)
 				 ->where('deleted = 0');
 		$query = $this->db->execute();
@@ -31,28 +31,24 @@ abstract class AbstractModel
 			 ->select($this->column)
 			 ->from($this->table)
 			 ->setParameter($param, $value)
-			 ->where($column . ' = '. $param );
-		// echo $this->db->getSQL();
+			 ->where($column . ' = '. $param);
 		$result = $this->db->execute();
 		return $result->fetch();
 	}
 
-	public function getById($id)
+	public function where($column, $value)
 	{
 		$this->db->select('*')
 				 ->from($this->table)
-				 ->where('id = ' . $id . ' AND deleted = 0');
-		$query = $this->db->execute();
-
-		return $query->fetch();
+				 ->where($column . ' = ' . $value);
+		$result = $this->db->execute();
+		return $result->fetch();
 	}
 
 	public function createData(array $data)
 	{
 		$valuesColumn = [];
 		$valuesData = [];
-		
-			
 
 		foreach ($data as $dataKey => $dataValue) {
 			$valuesColumn[$dataKey] = ':' . $dataKey;

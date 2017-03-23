@@ -2,14 +2,12 @@
 
 namespace App\Controllers;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 use App\Models\UserModel;
 
 class UserController extends AbstractController
 {
 
-	public function index(Request $request, Response $response)
+	public function index($request, $response)
 	{
 
 		$user = new UserModel($this->db);
@@ -20,13 +18,12 @@ class UserController extends AbstractController
 	}
 
 	// Controller Get SignIn
-	public function getSignIn(Request $request, Response $response)
+	public function getSignIn($request, $response)
 	{
 		return $this->view->render($response, 'user/signin.twig');
-
 	}
 
-	public function postSignIn(Request $request, Response $response)
+	public function postSignIn($request, $response)
 	{
 		// return $this->view->render($response, 'user/signin.twig');
 		$user = new UserModel($this->db);
@@ -48,26 +45,24 @@ class UserController extends AbstractController
 
 	}
 
-		
-
 	// Controller Get SignUp
-	public function getSignUp(Request $request, Response $response)
+	public function getSignUp($request, $response)
 	{
 		return $this->view->render($response, 'user/signup.twig');
-
 	}
 
 	// Controller Post SignUp
-	public function postSignUp(Request $request, Response $response)
+	public function postSignUp($request, $response)
 	{
-
 		$user = new UserModel($this->db);
-		$this->validation->rule('required', ['username', 'password', 'name']);
-
-		$this->validation->rule('integer', 'id');
-
-		$this->validation->rule('lengthMax', ['username', 'name', 'password'], 20);
-		$this->validation->rule('lengthMin', ['username', 'name', 'password'], 5);
+		$this->validation
+			 ->rule('required', ['username', 'password', 'name']);
+		$this->validation
+			 ->rule('integer', 'id');
+		$this->validation
+			 ->rule('lengthMax', ['username', 'name', 'password'], 20);
+		$this->validation
+			 ->rule('lengthMin', ['username', 'name', 'password'], 5);
 
 		if ($this->validation->validate()) {
 
@@ -85,12 +80,8 @@ class UserController extends AbstractController
 			if ($validation->failed()) {
 				return $response->withRedirect($this->router->pathFor('user.signup'));
 			}
-
 		}
-
-
 	}
-
 }
 
 ?>

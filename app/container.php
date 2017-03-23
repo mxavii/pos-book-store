@@ -27,20 +27,21 @@ $container['view'] = function ($c) {
 
 	$view->addExtension(new Slim\Views\TwigExtension(
 		$c->router, $c->request->getUri())
-
-
 	);
-
 
 	$view->getEnvironment()->addGlobal('old', @$_SESSION['old']);
 	unset($_SESSION['old']);
 	$view->getEnvironment()->addGlobal('errors', @$_SESSION['errors']);
 	unset($_SESSION['errors']);
 
+	$view->getEnvironment()->addGlobal('cart', @$_SESSION['cart']);
+
+	$view->getEnvironment()->addGlobal('basket', $c->get('basket'));
+
+
 	if (@$_SESSION['user']) {
 		$view->getEnvironment()->addGlobal('user', $_SESSION['user']);
 	}
-
 
 	return $view;
 };
@@ -53,8 +54,19 @@ $container['validation'] = function ($c) {
 	return new \Valitron\Validator($param, [], $setting['default']);
 };
 
-$ccontainer['flash'] = function ($c) {
+$container['flash'] = function ($c) {
 	return new \Slim\Flash\Messages;
-}
+};
+
+$container['storage'] = function ($c) {
+	return new \App\Support\Storage\SessionStorage();
+};
+
+$container['basket'] = function ($c) {
+	return new \App\Basket\Basket(
+		$c->get('storage'),
+		new \App\Models\ProductModel($c->get('db'))
+	);
+};
 
 ?>

@@ -10,13 +10,10 @@ class UserModel  extends AbstractModel
 
 	public function signUp(array $data)
 	{
-
 		$data = [
 			'username' => $data['username'],
 			'name'     => $data['name'],
 			'password' => password_hash($data['password'], PASSWORD_DEFAULT),
-		
-
 		];
 
 		$this->createData($data);

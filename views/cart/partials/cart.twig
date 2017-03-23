@@ -1,0 +1,41 @@
+<div class="col-md-4">
+	<div class="panel panel-heading input-lg label-primary">
+		<i class="fa ion-ios-cart fa-lg"></i>
+		<span class="pull-right">CART</span>
+	</div>
+	<div class="panel-group text-right">
+		<a href="{{ path_for('sale.discard') }}" class="btn btn-md btn-danger">DISCARD SALE</a>
+	</div>
+	<div class="panel box-body">
+	<div class="form-group row">
+		    <div class="col-md-5">Title</div>
+		    <div class="col-md-2 text-center">Quantity</div>
+		    <div class="col-md-5 text-center">Price</div>
+	</div>
+	{% for key, product in basket.all %}
+		<div class="form-group row">
+		    <div class="col-md-5">{{ product.title }}</div>
+		    <div class="col-md-2 text-center">{{ product.quantity }}</div>
+		    {% for keyPrice, price in basket.price %}
+		    	{% if  keyPrice	 == key %}
+					<div class="col-md-3 text-right">{{ price | number_format() }} IDR</div>
+			    {% endif %}
+		    {% endfor %}
+		    <div class="col-md-2 text-center">
+		    	<a href="{{ path_for('sale.del.id', { ('id'):product.id }) }}" title="delete" class="btn btn-danger btn-xs">
+		    		<i class="ion-close"></i>
+		    	</a>
+		    </div>
+		</div>
+	{% endfor %}
+		<hr>
+		<div class="form-group">
+			<p>Sub Total <span class="pull-right">{{ basket.subTotal | number_format }} IDR</span></p>
+			<p>Diskon <span class="pull-right">0 IDR</span></p>
+			<hr>
+			<h4>TOTAL <span class="pull-right">{{ basket.subTotal | number_format }} IDR</span></h4>
+		</div>
+		<hr>
+		<a href="#" class="btn btn-success btn-block btn-lg">PAY</a>
+	</div>
+</div>

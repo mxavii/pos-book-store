@@ -15,6 +15,6 @@
 		"vlucas/valitron" : "^1.4",
 		"league/flysystem" : "^1.0",
 		"behat/behat" : "^2.5",
-		"aura/session" : "^2.1"
+		"aura/session" : "^2.1",
 	}
 }
