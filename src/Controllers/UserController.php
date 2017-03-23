@@ -40,15 +40,24 @@ class UserController extends AbstractController
 
 
 		if(empty($login)) {
+				$this->flash->addMessage('error', 'Sorry username is not registered');
 			$_SESSION['errors'][] = 'Username is not Registered';
 			return $response->withRedirect($this->router->pathFor('user.signin'));
 		} else {
 			if (password_verify($request->getParam('password'), $login['password'])) {
-				$_SESSION['user'] = $login;
+
+			// if ($_SESSION['user']['status'] == 2) {
+				$_SESSION['user']['status'] = $login;
+
+				// if (@$_SESSION['user']['status'] == 1) {	
+				// $_SESSION['user'] = $login;
 
 				$this->flash->addMessage('succes', 'Congratulations you have successfully logged in as admin');
 				return $response->withRedirect($this->router->pathFor('home'));
+				// }
+				
 			} else {
+				$this->flash->addMessage('error', 'Sorry password is not registered');
 				$_SESSION['errors'][] = 'Wrong Password';
 				return $response->withRedirect($this->router->pathFor('user.signin'));
 			}
@@ -83,12 +92,7 @@ class UserController extends AbstractController
 		$this->validation->rule('lengthMin', [
 									'username',
 									'name',
-									'password'
-								], 5);
-		$thia->validation->rule('equals', [
-									'username',
-									'password'
-								]);
+									'password'], 5);
 		
 		if ($this->validation->validate()) {
 

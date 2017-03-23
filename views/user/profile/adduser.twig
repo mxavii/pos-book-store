@@ -1,7 +1,7 @@
 {% extends 'templates/default.twig' %}
 
 {% block title %} Add User {% endblock %}
-{% block headContent %} Add User {% endblock %}		
+{% block headContent %} Add User <a href=""><i class="fa fa-plus"></i></a> {% endblock %}		
 {% block content %}
 
 	<form action="{{ path_for('user.adduser')}}" method="post">

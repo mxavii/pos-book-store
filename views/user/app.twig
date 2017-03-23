@@ -24,10 +24,12 @@
 <body style="background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAFfKj/FAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF4OXp8PX50NXZBLxR6QAAAEhJREFUeNpiYGJgYGACCCAGMAAIIDiDCSCAGLAAgABCEcbBBAggGIORQhogwNCcwIjddKgQI6ojUbkgWSYMo+BCjKiOR9PLBAAchAAxHFDBbwAAAABJRU5ErkJggg==')">
 
 		<div class="container">
+		{% include 'templates/partials/flash.twig' %}
+			
 			{% block content %} 
 	
-	
 			{% endblock %}
+
 
 		</div>
 		{# {% include 'templates/partials/footer.twig' %}	 #}

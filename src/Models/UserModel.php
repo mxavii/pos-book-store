@@ -6,7 +6,7 @@ class UserModel  extends AbstractModel
 {
 
 	protected $table = 'users';
-	protected $column = ['id', 'username', 'password', 'name', 'create_at'];
+	protected $column = ['id', 'username', 'password', 'name', 'create_at', 'status'];
 
 	public function addUser(array $data)
 	{

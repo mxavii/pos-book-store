@@ -6,8 +6,10 @@
         {% if user %}
         <div class="pull-left info">
             <p>{{user.name}}</p>
-            <a href="#"><i class="fa fa-circle text-success"></i> 
-                Online
+            {# <a href="#"><i class="fa fa-circle text-success"></i>  #}
+
+            <a href="#"><i class="fa fa-circle text-success"></i>Online
+                
             </a>
         </div>
     </div>
@@ -30,8 +32,9 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#">Add Product</a></li>
-                <li><a href="#">List Product</a></li>
+                <li><a href="{{ base_url() }}/product">List Product</a></li>
+                <li><a href="{{ base_url() }}/product/add">Add Product</a></li>
+                <li><a href="{{ base_url() }}/product/inactive">Product Inactive</a></li>
             </ul>
         </li>
 <li class="treeview">
@@ -49,4 +52,6 @@
         </li>        
     </ul>
     {% endif %}
+</section>
+
 </section>

@@ -65,10 +65,12 @@ class ProfileController extends AbstractController
 			$_SESSION['errors'] = $this->validation->errors();
 			$_SESSION['old'] = $request->getParams();
 
+			$this->flash->addMessage('info');
 			return $response->withRedirect($this->router->pathFor('user.edit', ['id' => $args['id']]));
 
 
 			if ($validation->failed()) {
+				$this->flash->addMessage('error', 'Please fill out the form correctly');
 				return $response->withRedirect($this->router->pathFor('user.edit', ['id' => $args['id']]));
 			}
 
@@ -81,8 +83,6 @@ class ProfileController extends AbstractController
 		$user = new UserModel($this->db);
 		$datauser = $user->getAll();
 		$data['apa'] = $datauser;
-
-
 		return $this->view->render($response, 'user/profile/listuser.twig', $data);
 	}
 
@@ -149,6 +149,7 @@ class ProfileController extends AbstractController
 
 
 			if ($validation->failed()) {
+		$this->flash->addMessage('error', 'Please fill out the form correctly');
 				return $response->withRedirect($this->router->pathFor('user.adduser'));
 			}
 

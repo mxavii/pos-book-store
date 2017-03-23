@@ -1,7 +1,7 @@
 {% extends 'templates/default.twig' %}
 {% block title %} List User {% endblock %}
 
-{% block headContent %} List User {% endblock %}
+{% block headContent %} List User <a href="" style="color:green"><i class="fa fa-list"></i></a>{% endblock %}
 
 	{% block content %}
 			<section class="content">
@@ -10,12 +10,13 @@
     <div class="panel panel-default">
 	    <div class="panel-body">
 	    	<table id="example2" class="table table-bordered table-striped table-hover">
+	    		
 	    <thead>
 			<tr>
 		    	<th class="col-md-1 text-center">No</th>
 				<th>Name</th>
 		        <th>Username</th>
-				<th>Start Registration</th>
+				<th>Start Registration </th>
 				<th>Option</th>
 		     </tr>
 	        	</thead>
@@ -31,7 +32,7 @@
 			    <td>
 			         <a href="{{path_for('user.del' , {('id'): data.id})}}" title=" Remove Data" style="color:red" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o"></i></a></button>
 
-			         <a href="{{path_for('user.edit' , {('id'): data.id})}}" data-toggle="tooltip" data-placement="top" title=" Edit Data" ><i class="fa fa-edit"></i></a>
+			         <a href="{{path_for('user.edit' , {('id'): data.id})}}" data-toggle="tooltip" data-placement="top" title=" Edit Data" ><i class="fa fa-edit"></i></a> &nbsp;
 
 					<a href="" data-toggle="tooltip" data-placement="top" title=" Preview" ><i class="fa fa-eye"></i></a>
 					
