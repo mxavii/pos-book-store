@@ -41,7 +41,6 @@ $container['view'] = function ($c) {
 	if (@$_SESSION['user']) {
 		$view->getEnvironment()->addGlobal('user', $_SESSION['user']);
 	}
-   var_dump($_SESSION['user']);
 
 
 	$view->getEnvironment()->addGlobal('flash', $c->flash);

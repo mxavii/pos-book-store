@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/', 'App\Controllers\HomeController:index')->setName('home');
+$app->get('/home', 'App\Controllers\HomeController:index')->setName('home');
 
 $app->get('/product/add', 'App\Controllers\ProductController:getAdd')->setName('product.add');
 
@@ -22,14 +22,14 @@ $app->post('/product/list/edit/{id}', 'App\Controllers\ProductController:setUpda
 
 
 //Router Sign Up
-$app->get('/user/signup', 'App\Controllers\UserController:getSignUp')->setName('user.signup');
-$app->post('/user/signup', 'App\Controllers\UserController:postSignUp');
+// $app->get('/user/signup', 'App\Controllers\UserController:getSignUp')->setName('user.signup');
+// $app->post('/user/signup', 'App\Controllers\UserController:postSignUp');
 
 
 // Router Sign In
-$app->get('/user/signin', 'App\Controllers\UserController:getSignIn')->setName('user.signin');
+$app->get('/', 'App\Controllers\UserController:getSignIn')->setName('user.signin');
 
-$app->post('/user/signin', 'App\Controllers\UserController:postSignIn');
+$app->post('/', 'App\Controllers\UserController:postSignIn');
 
 
 // Router Sign Out

@@ -18,7 +18,7 @@ abstract class AbstractModel
 	{
 		$this->db->select('*')
 				 ->from($this->table)
-				 ->where('deleted = 0');
+				 ->where('deleted = 0 && status = 1');
 		$query = $this->db->execute();
 
 		return $query->fetchAll();
@@ -51,7 +51,7 @@ abstract class AbstractModel
 			 ->from($this->table)
 			 ->setParameter($param, $value)
 			 ->where($column . ' = '. $param);
-		echo $this->db->getSQL();
+		// echo $this->db->getSQL();
 		$result = $this->db->execute();
 		return $result->fetch();
 	}

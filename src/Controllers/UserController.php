@@ -40,81 +40,40 @@ class UserController extends AbstractController
 
 
 		if(empty($login)) {
-				$this->flash->addMessage('error', 'Sorry username is not registered');
-			$_SESSION['errors'][] = 'Username is not Registered';
+				$this->flash->addMessage('warning', ' Username is not registered');
+			// $_SESSION['errors'][] = 'Username is not Registered';
 			return $response->withRedirect($this->router->pathFor('user.signin'));
 		} else {
 			if (password_verify($request->getParam('password'), $login['password'])) {
 
-			// if ($_SESSION['user']['status'] == 2) {
-				$_SESSION['user']['status'] = $login;
+				$_SESSION['user'] = $login;
 
-				// if (@$_SESSION['user']['status'] == 1) {	
-				// $_SESSION['user'] = $login;
+				if ($_SESSION['user']['status'] == 2) {	
 
 				$this->flash->addMessage('succes', 'Congratulations you have successfully logged in as admin');
 				return $response->withRedirect($this->router->pathFor('home'));
-				// }
+			
+		} else {
+			if (isset($_SESSION['user']['status'])) {
+				$this->flash->addMessage('error', ' Sorry ? You Not Admin ');
+				return $response->withRedirect($this->router->pathFor('user.signin'));
+
+				}
+			}
 				
 			} else {
-				$this->flash->addMessage('error', 'Sorry password is not registered');
-				$_SESSION['errors'][] = 'Wrong Password';
-				return $response->withRedirect($this->router->pathFor('user.signin'));
+				$this->flash->addMessage('warning', ' Password is not registered');
+				// $_SESSION['errors'][] = 'Wrong Password';
+				return $response->withRedirect($this->router->pathFor('user.signin'));	
 			}
-		}
+
+
+		} 
 	}
 
 		
 
-	// Controller Get SignUp
-	public function getSignUp( $request,  $response)
-	{
-		return $this->view->render($response, 'user/signup.twig');
-
-	}
-
-	// Controller Post SignUp
-	public function postSignUp( $request,  $response)
-	{
-
-		$user = new UserModel($this->db);
-		$this->validation->rule('required', ['username', 'password', 'name'])->message('{field} must not be empty')->label('Username', 'password', 'name');
-
-		$this->validation->rule('integer', 'id');
-
-		$this->validation->rule('alphaNum', 'username');
-
-		$this->validation->rule('lengthMax', [
-									'username',
-									'name',
-									'password'
-								], 30);
-		$this->validation->rule('lengthMin', [
-									'username',
-									'name',
-									'password'], 5);
-		
-		if ($this->validation->validate()) {
-
-		$user->addUser($request->getParams());
 	
-		return $response->withRedirect($this->router->pathFor('user.signin'));
-
-		} else {
-			$_SESSION['errors'] = $this->validation->errors();
-			$_SESSION['old'] = $request->getParams();
-
-			return $response->withRedirect($this->router->pathFor('user.signup'));
-
-
-			if ($validation->failed()) {
-				return $response->withRedirect($this->router->pathFor('user.signup'));
-			}
-
-		}
-
-
-	}
 
 }
 
