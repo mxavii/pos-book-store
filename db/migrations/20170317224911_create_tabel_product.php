@@ -30,7 +30,7 @@ class CreateTabelProduct extends AbstractMigration
         $product = $this->table('product');
         $product->addColumn('category_id', 'integer')
                 ->addColumn('title', 'string')
-                ->addColumn('desc', 'text')
+                ->addColumn('short_desc', 'text')
                 ->addColumn('price', 'integer')
                 ->addColumn('image', 'string')
                 ->addColumn('update_at', 'timestamp')

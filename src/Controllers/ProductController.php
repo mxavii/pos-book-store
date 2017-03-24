@@ -61,7 +61,7 @@ class ProductController extends AbstractController
     public function setActive(Request $request, Response $response, $args)
 	{
 		$product = new ProductModel($this->db);
-		$product_restore = $product->restore($args['id']);
+		$product_restore = $product->restoreData($args['id']);
 		return $response->withRedirect($this->router->pathFor('product.inactive'));
 	}
 

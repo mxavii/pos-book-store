@@ -32,16 +32,18 @@ $container['view'] = function ($c) {
 	);
 
 
+
 	$view->getEnvironment()->addGlobal('old', @$_SESSION['old']);
 	unset($_SESSION['old']);
-
 	$view->getEnvironment()->addGlobal('errors', @$_SESSION['errors']);
 	unset($_SESSION['errors']);
-
 
 	if (@$_SESSION['user']) {
 		$view->getEnvironment()->addGlobal('user', $_SESSION['user']);
 	}
+
+
+	$view->getEnvironment()->addGlobal('flash', $c->flash);
 
 	return $view;
 };
@@ -54,7 +56,7 @@ $container['validation'] = function ($c) {
 	return new \Valitron\Validator($param, [], $setting['default']);
 };
 
-$ccontainer['flash'] = function ($c) {
+$container['flash'] = function ($c) {
 	return new \Slim\Flash\Messages;
 }
 
