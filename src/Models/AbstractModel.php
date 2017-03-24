@@ -14,11 +14,21 @@ abstract class AbstractModel
 		$this->db = $db;
 	}
 
-	public function getAll()
+	public function getAllUser()
 	{
 		$this->db->select('*')
 				 ->from($this->table)
 				 ->where('deleted = 0 && status = 1');
+		$query = $this->db->execute();
+
+		return $query->fetchAll();
+	}
+
+	public function getAll()
+	{
+		$this->db->select('*')
+				 ->from($this->table)
+				 ->where('deleted = 0');
 		$query = $this->db->execute();
 
 		return $query->fetchAll();

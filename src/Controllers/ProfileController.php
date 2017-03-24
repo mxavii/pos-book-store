@@ -81,7 +81,7 @@ class ProfileController extends AbstractController
 	{
 
 		$user = new UserModel($this->db);
-		$datauser = $user->getAll();
+		$datauser = $user->getAllUser();
 		$data['apa'] = $datauser;
 		return $this->view->render($response, 'user/profile/listuser.twig', $data);
 	}
