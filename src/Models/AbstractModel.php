@@ -16,7 +16,7 @@ abstract class AbstractModel
 
 	public function getAll()
 	{
-		$this->db->select($this->column)
+		$this->db->select('*')
 				 ->from($this->table)
 				 ->where('deleted = 0');
 		$query = $this->db->execute();
@@ -24,19 +24,17 @@ abstract class AbstractModel
 		return $query->fetchAll();
 	}
 
-	public function find($column, $value)
+	public function getInactive()
 	{
-		$param = ':'.$column;
-		$this->db
-			 ->select($this->column)
-			 ->from($this->table)
-			 ->setParameter($param, $value)
-			 ->where($column . ' = '. $param);
-		$result = $this->db->execute();
-		return $result->fetch();
+		$this->db->select('*')
+				 ->from($this->table)
+				 ->where('deleted = 1');
+		$query = $this->db->execute();
+
+		return $query->fetchAll();
 	}
 
-	public function where($column, $value)
+	public function find($column, $value)
 	{
 		$this->db->select('*')
 				 ->from($this->table)
@@ -88,13 +86,20 @@ abstract class AbstractModel
 				 ->execute();
 	}
 
+	public function restore($id)
+	{
+		$this->db->update($this->table)
+				 ->set('deleted', 0)
+				 ->where('id = ' . $id)
+				 ->execute();
+	}
+
 	public function hardDelete($id)
 	{
 		$this->db->delete($this->table)
 				 ->where('id = ' . $id)
 				 ->execute();
 	}
-
 }
 
 ?>

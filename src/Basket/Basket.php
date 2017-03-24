@@ -67,7 +67,7 @@ class Basket
 		// var_dump($this->storage->get());
 		// die();
 		if (!empty($ids)) {
-			$products = $this->product->getById($ids);
+			$products = $this->product->where($ids);
 		// var_dump($products);
 			foreach ($products as $product) {
 				$product['quantity'] = $this->get($product)['quantity'];
@@ -76,15 +76,6 @@ class Basket
 		}
 
 		return $item;
-	}
-
-	public function price()
-	{
-		foreach ($this->all() as $item) {
-			$price[] = $item['price'] * $item['quantity'];
-		}
-
-		return $price;
 	}
 
 	public function subTotal()

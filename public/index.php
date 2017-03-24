@@ -12,6 +12,7 @@ include __DIR__ . '/../app/container.php';
 include __DIR__ . '/../app/routing.php';
 
 $app->run();
+
 // var_dump($_SESSION);
 // session_destroy();
 ?>

@@ -31,6 +31,7 @@ $container['view'] = function ($c) {
 
 	$view->getEnvironment()->addGlobal('old', @$_SESSION['old']);
 	unset($_SESSION['old']);
+
 	$view->getEnvironment()->addGlobal('errors', @$_SESSION['errors']);
 	unset($_SESSION['errors']);
 

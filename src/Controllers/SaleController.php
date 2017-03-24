@@ -21,7 +21,7 @@ class SaleController extends AbstractController
 	{
 		$product = new ProductModel($this->db);
 
-		$products = $product->where('id', $args['id']);
+		$products = $product->find('id', $args['id']);
 		// var_dump($products);
 		// exit();
 		if (!$products) {
