@@ -48,7 +48,7 @@ class UserController extends AbstractController
 
 				$_SESSION['user'] = $login;
 
-				if ($_SESSION['user']['status'] == 2) {	
+				if ($_SESSION['user']['status'] == 0) {	
 
 				$this->flash->addMessage('succes', 'Congratulations you have successfully logged in as admin');
 				return $response->withRedirect($this->router->pathFor('home'));
