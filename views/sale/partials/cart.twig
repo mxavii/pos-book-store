@@ -27,10 +27,13 @@
 	{% endfor %}
 		<hr>
 		<div class="form-group">
-			<p>Sub Total <span class="pull-right">{{ basket.total | number_format }} IDR</span></p>
+		<strong>
+			<p>Sub Total <span class="pull-right">{{ basket.subTotal | number_format }} IDR</span></p>
 			<p>Diskon <span class="pull-right">0 IDR</span></p>
+			<p>Tax (No Tax) <span class="pull-right">0 IDR</span></p>
 			<hr>
 			<h4>TOTAL <span class="pull-right">{{ basket.total | number_format }} IDR</span></h4>
+		</strong>
 		</div>
 		<hr>
 		<a href="{{ path_for('sale.pay') }}" class="btn btn-success btn-block btn-lg {{ basket.total ? '' : 'disabled' }}">PAY</a>

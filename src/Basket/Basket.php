@@ -74,12 +74,28 @@ class Basket
 		return $item;
 	}
 
+	public function subTotal()
+	{
+		$subTotal = 0;
+
+		foreach ($this->all() as $item) {
+			$subTotal = $subTotal + $item['price'] * $item['quantity'];
+		}
+
+		return $subTotal;
+	}
+
 	public function total()
 	{
 		$total = 0;
-		
-		foreach ($this->all() as $item) {
-			$total = $total + $item['price'] * $item['quantity'];
+
+		if (!empty($this->subTotal())) {
+			
+			$tax = '';
+
+			$totalTax = $tax * $this->subTotal();
+
+			$total = $this->subTotal() - $totalTax;
 		}
 
 		return $total;
