@@ -17,29 +17,71 @@ $app->group('', function () use ($app,$namespace) {
 	$app->get('/home', $namespace . '\HomeController:index')->setName('home');
 
 	// Product ----------------------------------------------------------------
-	$app->get('/product/add', $namespace . '\ProductController:getAdd')
+	$app->get('/product/add', 
+		$namespace . '\CategoryController:getAllCategory')
 		->setName('product.add');
-	$app->post('/product/add', $namespace . '\ProductController:postAdd')
+	$app->post('/product/add',
+		$namespace . '\ProductController:postAdd')
 		->setName('product.add.post');
-	$app->get('/product', $namespace . '\ProductController:getActiveProduct')
+
+	$app->get('/product', 
+		$namespace . '\ProductController:getActiveProduct')
 		->setName('product.active');
+
 	$app->get('/product/inactive', 
 		$namespace . '\ProductController:getInactiveProduct')
 		->setName('product.inactive');
 	$app->post('/product/active', 
 		$namespace . '\ProductController:setInactive')
 		->setName('product.set.inactive');
+
 	$app->post('/product/list/muldel', 
 		$namespace . '\ProductController:setDelete')
 		->setName('product.inactive.post');
+
 	$app->get('/product/list/activated/{id}', 
 		$namespace . '\ProductController:setActive');
-	$app->get('/product/list/edit/{id}', 
+
+	$app->get('/product/list/edit/{id}',
 		$namespace . '\ProductController:getEdit')
 		->setName('product.edit');
 	$app->post('/product/list/edit/{id}', 
 		$namespace . '\ProductController:setUpdate')
 		->setName('product.edit.post');
+
+	// Category ---------------------------------------------------------------
+	$app->get('/category/listcategory', 
+		$namespace . '\CategoryController:getAll')
+		->setName('category.listcategory');
+
+	$app->get('/category/del/{id}', 
+		$namespace . '\CategoryController:softDelete')
+		->setName('category.del');
+
+	$app->get('/category/addcategory', 
+		$namespace . '\CategoryController:getAddCategory')
+		->setName('category.addcategory');
+	$app->post('/category/addcategory', 
+		$namespace . '\CategoryController:postAddCategory');
+
+	$app->get('/category/trashcategory', 
+		$namespace . '\CategoryController:getAllTrash')
+		->setName('category.trashcategory');
+
+	$app->get('/category/delete/{id}', 
+		$namespace . '\CategoryController:hardDelete')
+		->setName('category.delete');
+
+	$app->get('/category/restore/{id}', 
+		$namespace . '\CategoryController:restoreData')
+		->setName('category.restore');
+
+	$app->get('/category/edit/{id}', 
+		$namespace . '\CategoryController:getEditCategory')
+		->setName('category.edit');
+	$app->post('/category/edit/{id}', 
+		$namespace . '\CategoryController:postEditCategory')
+		->setName('category.edit.post');
 
 	// Sale -------------------------------------------------------------------
 	$app->get('/sale', $namespace . '\SaleController:index')
@@ -60,7 +102,8 @@ $app->group('', function () use ($app,$namespace) {
 		->setName('user.admin');
 
 	// Router ListUser --------------------------------------------------------
-	$app->get('/user/listuser', $namespace . '\ProfileController:getProfileUser')
+	$app->get('/user/listuser', 
+		$namespace . '\ProfileController:getProfileUser')
 		->setName('user.listuser');
 	$app->get('/user/del/{id}', $namespace . '\ProfileController:softDelete')
 		->setName('user.del');

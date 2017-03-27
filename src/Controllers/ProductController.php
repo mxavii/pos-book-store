@@ -35,6 +35,12 @@ class ProductController extends AbstractController
 
 		if ($this->validation->validate()) {
 			$product->createData($request->getParams());
+
+			return $response->withRedirect($this->router
+							->pathFor('product.add'));
+
+			$this->flash->addMessage('succes', 'Data successfully added');
+			
 			return $response->withRedirect($this->router
 							->pathFor('product.add'));
 		} else {

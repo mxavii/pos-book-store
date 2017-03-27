@@ -25,17 +25,24 @@
 								{% endif %}
 							</div>
 						</div>
+
 						<div class="col-xs-12 col-sm-4 col-md-5">
 							<div class="form-group {{ errors.category_id ? 'has-error' : '' }}">
 								<label for="category_id">Category</label>
 								<select name="category_id" class="form-control">
-									<option value="1">Religion</option>
-									<option value="2">Biography</option>
-									<option value="3">Technology</option>
-									<option value="4">Fiction</option>
+									<option value=""><h4>Select Category</h4></option>
+									{% for data in category %}
+									<option value="{{data.id}}">{{data.name}}</option>
+									{# <option value="3">Technology</option>
+									<option value="4">Fiction</option> #}
+									{% endfor %}
 								</select>
+								{% if errors.category_id %}
+								<span class="help-block">{{errors.category_id | first}}</span>
+								{% endif %}								
 							</div>
 						</div>
+						
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-7">
@@ -61,7 +68,7 @@
 						<div class="col-xs-12 col-sm-6 col-md-12">
 							<div class="form-group {{ errors.short_desc ? 'has-error' : '' }}">
 								<label for=short_desc>Description</label>
-								<textarea name="short_desc" id="short_desc" class="form-control"></textarea>
+								<textarea name="short_desc" id="short_desc" class="form-control">{{ old.short_desc }}</textarea>
 								{% if errors.short_desc %}
 								<span class="help-block">{{errors.short_desc | first}}</span>
 								{% endif %}
@@ -75,4 +82,5 @@
 		</div>
 	</div>
 </div>
+
 {% endblock %}

@@ -35,7 +35,20 @@
             </ul>
         </li>
         <li class="treeview">
-            <a href="#"><i class="fa ion-ios-people fa-lg"></i>
+            <a href="#"><i class="fa fa-book"></i>
+                <span>CATEGORY</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="{{path_for('category.listcategory')}}">LIST CATEGORY</a></li>
+                <li><a href="{{path_for('category.addcategory')}}">ADD CATEGORY</a></li>
+                <li><a href="{{path_for('category.trashcategory')}}">TRASH</a></li>
+            </ul>
+        </li>  
+        <li class="treeview">
+            <a href="#"><i class="fa fa-user-circle"></i>
                 <span>USER</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
@@ -46,7 +59,16 @@
                 <li><a href="{{path_for('user.adduser')}}">ADD USER</a></li>
                 <li><a href="{{path_for('user.trashuser')}}">TRASH</a></li>
             </ul>
-        </li>        
-    </ul>
+
+        <li>
+         <a href="{{ path_for('user.signout')}}"><i class="fa fa-power-off"></i>
+            <span>LOGOUT</span></a>
+        </li>
+
+        </ul> 
+    </li>   
+</ul>
+
     {% endif %}
+
 </section>
