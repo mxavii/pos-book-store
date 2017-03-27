@@ -35,6 +35,7 @@ class ProductController extends AbstractController
 
 		if ($this->validation->validate()) {
 			$product->createData($request->getParams());
+			$this->flash->addMessage('succes', 'Data successfully added');
 			return $response->withRedirect($this->router->pathFor('product.add'));
 		} else {
 			$_SESSION['old'] = $request->getParams();
