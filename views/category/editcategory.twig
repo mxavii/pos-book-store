@@ -1,0 +1,35 @@
+{% extends 'templates/default.twig' %}
+{% block title %} Edit Category {% endblock %}
+
+{% block headContent %} Edit Category {% endblock %}
+
+	{% block content %}
+
+<form action="{{path_for('category.edit.post' , {('id'): category.id})}}" method="post">
+   <div class="box box-info">
+            <div class="box-header">
+             <center> <h3 class="box-title" style="font-family:impact">  Edit Category</h3></center>
+            </div>
+            <div class="box-body">
+              <!-- Date dd/mm/yyyy -->
+              <div class="form-group {{ errors.name ? 'has-error' : '' }}" >
+                <label>Name Category:</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-users"></i>
+                  </div>
+                  <input type="text" name="name" class="form-control" value="{{ category.name }}" placeholder="Category Name">
+                </div>
+			{% if errors.name %}
+		  		<span class="help-block">{{errors.name | first}}</span>
+		  	{% endif %}                    
+                <!-- /.input group -->
+              </div>
+		
+	    <button type="submit" class="btn btn-default" style="margin:10px"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+  </form>
+ 
+ </div>
+</div>			
+	{% endblock %}

@@ -37,7 +37,21 @@
                 <li><a href="{{ base_url() }}/product/inactive">Product Inactive</a></li>
             </ul>
         </li>
-<li class="treeview">
+    <li class="treeview">
+            <a href="#"><i class="fa fa-book"></i>
+                <span>Category</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="{{path_for('category.listcategory')}}">List Category</a></li>
+                <li><a href="{{path_for('category.addcategory')}}">Add Category</a></li>
+                <li><a href="{{path_for('category.trashcategory')}}">Trash</a></li>
+            </ul>
+        </li>  
+
+    <li class="treeview">
             <a href="#"><i class="fa fa-user-circle"></i>
                 <span>User</span>
                 <span class="pull-right-container">
@@ -49,9 +63,18 @@
                 <li><a href="{{path_for('user.adduser')}}">Add User</a></li>
                 <li><a href="{{path_for('user.trashuser')}}">Trash</a></li>
             </ul>
-        </li>        
-    </ul>
+
+        <li>
+         <a href="{{ path_for('user.signout')}}"><i class="fa fa-power-off"></i>
+            <span>Logout</span></a>
+        </li>
+
+        </ul> 
+    </li>   
+</ul>
+
     {% endif %}
+
 </section>
 
 </section>
