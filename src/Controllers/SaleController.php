@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\ProductModel;
+use App\Models\Orders;
+use App\Models\OrderItems;
 
 class SaleController extends AbstractController
 {
@@ -12,7 +14,7 @@ class SaleController extends AbstractController
 
 		$products = $sale->getAll();
 
-		return $this->view->render($response, 'cart/index.twig', [
+		return $this->view->render($response, 'sale/index.twig', [
 			'products' => $products
 		]);
 	}
@@ -22,8 +24,7 @@ class SaleController extends AbstractController
 		$product = new ProductModel($this->db);
 
 		$products = $product->find('id', $args['id']);
-		// var_dump($products);
-		// exit();
+		
 		if (!$products) {
 			return $response->withRedirect($this->router->pathFor('sale'));
 		}
@@ -36,68 +37,40 @@ class SaleController extends AbstractController
 	public function remove($request, $response, $args)
 	{
 		$this->basket->remove($args['id']);
+
 		return $response->withRedirect($this->router->pathFor('sale'));
 	}
 
 	public function clear($request, $response)
 	{
 		$this->basket->clear();
-		return $response->withRedirect($this->router->pathFor('sale'));
 
+		return $response->withRedirect($this->router->pathFor('sale'));
 	}
 
-	// public function addCart($request, $response, $args)
-	// {
-	// 	$products = new SaleModel($this->db);
+	public function pay($request, $response)
+	{	
+		$order = new Orders($this->db);
+		$orderItems = new OrderItems($this->db);
 
-	// 	$product = $products->getById($args['id']);
+		// Insert Table Orders ---------------------------------
+		$user_id = $_SESSION['user']['id'];
+		$total_price = $this->basket->total();
 
-	// 	$session = $this->session->set('cart', $product);
+		$orderId = $order->save($user_id, $total_price);
 
-	// 	$getSession = $this->session->get('cart');
+		// Insert Table OrderItems -----------------------------
+		foreach ($this->basket->all() as $item) {
+ 			$data[] = [
+ 				'order_id'		=>	$orderId,
+ 				'product_id'  	=> 	$item['id'], 
+ 				'quantity'	  	=> 	$item['quantity'],
+ 			];
+ 		}
 
-	// 	var_dump($getSession);
-	// 	exit();
+ 		$orderItems->saveToMany($data);
 
-		// if (in_array($args['id'], 
-		// 	array_column($_SESSION['cart'], 'id')) == $args['id']) {
-		// 	$search = array_search($args['id'], array_column($_SESSION['cart'], 'id'));
-
-		// 	$_SESSION['cart'][$search]['qty']++;
-		// 	$_SESSION['cart'][$search]['price'] += $_SESSION['cart'][$search]['price'];
-		// } else {
-		// 	$dataCart = $products->getById($args['id']);
-
-		// 	$data = array_merge($dataCart, ['qty' => 1]);
-
-		// 	$_SESSION['cart'][] = $data;
-		// }
-
-		// $this->session->set('cart', $dataCart);
-
-	// 	return $response->withRedirect($this->router->pathFor('sale'));
-	// }
-
-	// public function deleteByid($request, $response, $args)
-	// {
-	// 	unset($_SESSION['cart'][$args['id']]);
-
-	// 	return $response->withRedirect($this->router->pathFor('sale'));
-	// }
-
-	// public function discard($request, $response)
-	// {
-	// 	unset($_SESSION['cart']);
-
-	// 	return $response->withRedirect($this->router->pathFor('sale'));
-	// }
-
-	// public function pay($request, $response)
-	// {
-	// 	$pay = new SaleModel($this->db);
-
-	// }
-
+		return $response->withRedirect($this->router->pathFor('sale'));
+	}
 }
-
 ?>

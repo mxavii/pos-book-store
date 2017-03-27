@@ -9,11 +9,12 @@ class ProductModel extends AbstractModel
 	public function where($id)
 	{
 		if (!empty($id)) {
-			$this->db->select('*')
+			$this->qb->select('*')
 					 ->from($this->table)
 					 ->where('id IN (' . implode(',', $id) . ')');
-			$query = $this->db->execute();
+			$query = $this->qb->execute();
 			return $query->fetchAll();
+			$query->close();
 		}
 	}
 	

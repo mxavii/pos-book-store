@@ -3,7 +3,7 @@
 namespace App\Basket;
 
 use App\Models\ProductModel;
-use App\Support\Storage\SessionStorage;
+use App\Core\Storage\SessionStorage;
 
 class Basket
 {
@@ -28,8 +28,8 @@ class Basket
 	public function update($product, $quantity)
 	{
 		$this->storage->set($product['id'], [
-			'product_id'	=>  $product['id'],
-			'quantity'		=>  $quantity,
+			'product_id'	=>  (int) $product['id'],
+			'quantity'		=>  (int) $quantity,
 		]);
 	}
 
@@ -60,15 +60,11 @@ class Basket
 
 		foreach ($this->storage->all() as $product) {
 			$ids[] = $product['product_id'];
-			$quantity[] = $product['quantity'];
 		}
-		// var_dump($this->storage->all());
-		// var_dump($this->product);
-		// var_dump($this->storage->get());
-		// die();
+		
 		if (!empty($ids)) {
 			$products = $this->product->where($ids);
-		// var_dump($products);
+
 			foreach ($products as $product) {
 				$product['quantity'] = $this->get($product)['quantity'];
 				$item[] = $product;
@@ -78,7 +74,7 @@ class Basket
 		return $item;
 	}
 
-	public function subTotal()
+	public function total()
 	{
 		$total = 0;
 		

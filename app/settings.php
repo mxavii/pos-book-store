@@ -22,7 +22,7 @@ return [
 
 		// Setting Valadasi
 		'lang' => [
-			'default'	=>	'id',
+			'default'	=>	'en',
 		],
 	]
 ];

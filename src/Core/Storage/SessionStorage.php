@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Storage;
+namespace App\Core\Storage;
 
 class SessionStorage 
 {

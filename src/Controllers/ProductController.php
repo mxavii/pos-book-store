@@ -31,15 +31,17 @@ class ProductController extends AbstractController
 			'price'		   => 'Harga',
 			'category_id'  => 'Kategori',
 			'image'  	   => 'Gambar',
-			]);
+		]);
 
 		if ($this->validation->validate()) {
 			$product->createData($request->getParams());
-			return $response->withRedirect($this->router->pathFor('product.add'));
+			return $response->withRedirect($this->router
+							->pathFor('product.add'));
 		} else {
 			$_SESSION['old'] = $request->getParams();
 			$_SESSION['errors'] = $this->validation->errors();
-			return $response->withRedirect($this->router->pathFor('product.add'));
+			return $response->withRedirect($this->router
+							->pathFor('product.add'));
 		}
     }
 
@@ -55,14 +57,16 @@ class ProductController extends AbstractController
         $product = new ProductModel($this->db);
         $product_list = $product->getInactive();
         $data['product'] = $product_list;
-        return $this->view->render($response, 'products/list-inactive.twig', $data);
+        return $this->view->render($response, 'products/list-inactive.twig', 
+        	$data);
     }
 
     public function setActive(Request $request, Response $response, $args)
 	{
 		$product = new ProductModel($this->db);
-		$product_restore = $product->restore($args['id']);
-		return $response->withRedirect($this->router->pathFor('product.inactive'));
+		$product_restore = $product->restoreData($args['id']);
+		return $response->withRedirect($this->router
+						->pathFor('product.inactive'));
 	}
 
     public function getEdit(Request $request, Response $response, $args)
@@ -84,7 +88,7 @@ class ProductController extends AbstractController
 			'price'		   => 'Harga',
 			'category_id'  => 'Kategori',
 			'image'  	   => 'Gambar',
-			]);
+		]);
 
 		if ($this->validation->validate()) {
 			$product->updateData($request->getParams(), $args['id']);
@@ -103,7 +107,8 @@ class ProductController extends AbstractController
             $product_del = $product->hardDelete($value);
         }
 
-		return $response->withRedirect($this->router->pathFor('product.inactive'));
+		return $response->withRedirect($this->router
+						->pathFor('product.inactive'));
 	}
 
     public function setInactive(Request $request, Response $response)
@@ -113,6 +118,7 @@ class ProductController extends AbstractController
             $product_del = $product->softDelete($value);
         }
 
-		return $response->withRedirect($this->router->pathFor('product.active'));
+		return $response->withRedirect($this->router
+						->pathFor('product.active'));
 	}
 }

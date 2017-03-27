@@ -18,7 +18,7 @@ class Product extends AbstractSeed
             $data[] = [
                 'category_id'   =>  '2',
                 'title'         =>  'Test',
-                'desc'          =>  'Test Data Buku',
+                'short_desc'          =>  'Test Data Buku',
                 'price'         =>  '50000',
                 'image'         =>  'book.jpg'
             ];
