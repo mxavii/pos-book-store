@@ -6,12 +6,9 @@ class Orders extends AbstractModel
 {
 	protected $table = 'orders';
 
-	public function save($user_id, $total_price)
+	public function save(array $data)
 	{
-		$stmt = $this->db->prepare("INSERT INTO orders (user_id,total_price) 
-			VALUES ($user_id,$total_price)");
-
-		$stmt->execute();
+		$this->db->insert($this->table, $data);
 
 		return $this->db->lastInsertId();
 	}

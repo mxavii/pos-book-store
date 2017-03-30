@@ -53,24 +53,51 @@ class SaleController extends AbstractController
 		$order = new Orders($this->db);
 		$orderItems = new OrderItems($this->db);
 
-		// Insert Table Orders ---------------------------------
-		$user_id = $_SESSION['user']['id'];
-		$total_price = $this->basket->total();
+		$this->validation
+			 ->rule('required', ['be_paid'])
+			 ->rule('numeric', ['be_paid'])
+			 ->message("INPUT MUST NUMBER");
 
-		$orderId = $order->save($user_id, $total_price);
+		if ($this->validation->validate()) {
+			$no_invoice = date('ym') . '000000';
 
-		// Insert Table OrderItems -----------------------------
-		foreach ($this->basket->all() as $item) {
- 			$data[] = [
- 				'order_id'		=>	$orderId,
- 				'product_id'  	=> 	$item['id'], 
- 				'quantity'	  	=> 	$item['quantity'],
- 			];
- 		}
+			$no_inv = $order->desc('no_invoice');
 
- 		$orderItems->saveToMany($data);
+			if (!empty($no_inv)) {
+				$no_invoice = $no_inv['no_invoice'];
+				$no_invoice++;
+			}
 
-		return $response->withRedirect($this->router->pathFor('sale'));
+			// Insert Table Orders ---------------------------------
+			$dataOrder = [
+				'no_invoice'	=>	(int) $no_invoice,
+				'user_id'		=>	$_SESSION['user']['id'],
+				'total_paid'	=>	$this->basket->total(),
+				'be_paid'		=>	(int) $request->getParam('be_paid'),
+			];
+
+			$orderId = $order->save($dataOrder);
+
+			// Insert Table OrderItems -----------------------------
+			foreach ($this->basket->all() as $item) {
+	 			$data[] = [
+	 				'order_id'		=>	$orderId,
+	 				'product_id'  	=> 	$item['id'], 
+	 				'quantity'	  	=> 	$item['quantity'],
+	 			];
+	 		}
+
+	 		$orderItems->saveToMany($data);
+
+	 		$this->basket->clear();
+
+			return $response->withRedirect($this->router->pathFor('invoice', [
+				'no_invoice' => $no_invoice]));
+		} else {
+			$_SESSION['errors'] = $this->validation->errors();
+
+			return $response->withRedirect($this->router->pathFor('sale'));
+		}
 	}
 }
 ?>
