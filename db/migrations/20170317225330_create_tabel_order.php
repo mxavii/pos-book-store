@@ -29,7 +29,9 @@ class CreateTabelOrder extends AbstractMigration
     {
         $order = $this->table('orders');
         $order->addColumn('user_id', 'integer')
-              ->addColumn('total_price', 'integer')
+              ->addColumn('no_invoice', 'integer')
+              ->addColumn('total_paid', 'integer')
+              ->addColumn('be_paid', 'integer')
               ->addColumn('update_at', 'timestamp')
               ->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
               ->addColumn('deleted', 'integer', ['default' => 0])

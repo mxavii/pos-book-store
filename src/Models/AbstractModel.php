@@ -67,6 +67,17 @@ abstract class AbstractModel
 		return $result->fetch();
 	}
 
+	public function desc($column)
+	{
+		$this->qb
+			 ->select($column)
+			 ->from($this->table)
+			 ->orderBy($column, 'DESC')
+			 ->setMaxResults(1);
+		$result = $this->qb->execute();
+		return $result->fetch();
+	}
+
 	public function createData(array $data)
 	{
 		$valuesColumn = [];

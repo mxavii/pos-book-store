@@ -51,21 +51,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-  		$('select').select2();
-	<script type="text/javascript">
-	</script>
-	<script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script> 
-	<script>
-	$(function () {
-	    $('#example2').DataTable({
-	    	"paging": true,
-	    	"lengthChange": true,
-	     	"searching": true,
-	      	"ordering": true,
-	      	"info": true,
-	      	"autoWidth": true
-	    });
-	  });
-	</script>
+<script type="text/javascript">
+		$('select').select2();
+</script>
+
+<script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script> 
+<script>
+$(function () {
+    $('#example2').DataTable({
+    	"paging": true,
+    	"lengthChange": true,
+     	"searching": true,
+      	"ordering": true,
+      	"info": true,
+      	"autoWidth": true
+    });
+  });
+</script>
 {% block script %} {% endblock %}
 </html>
