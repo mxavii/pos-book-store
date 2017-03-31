@@ -1,2 +1,5 @@
 /vendor
 composer.lock
+phinx.yml
+public/assets
+app/settings.php

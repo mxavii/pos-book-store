@@ -14,13 +14,13 @@ class Product extends AbstractSeed
      */
     public function run()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 8 ; $i++) {
             $data[] = [
                 'category_id'   =>  '2',
                 'title'         =>  'Test',
-                'desc'          =>  'Test Data Buku',
+                'short_desc'    =>  'Test Data Buku',
                 'price'         =>  '50000',
-                'image'         =>  'book.jpg'
+                'image'         =>  'default-thumbnail.jpg'
             ];
         }
 
