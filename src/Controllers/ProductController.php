@@ -6,6 +6,7 @@ namespace App\Controllers;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Models\ProductModel;
+use App\Models\CategoryModel;
 
 class ProductController extends AbstractController
 {
@@ -21,9 +22,28 @@ class ProductController extends AbstractController
 
     public function postAdd(Request $request, Response $response)
 	{
+        $storage = new \Upload\Storage\FileSystem('assets/image');
+        $image = new \Upload\File('image',$storage);
+        $image->setName(uniqid());
+        $image->addValidations(array(
+            new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+            'image/jpg', 'image/jpeg')),
+            new \Upload\Validation\Size('5M')
+        ));
+
+        $data = array(
+          'name'       => $image->getNameWithExtension(),
+          'extension'  => $image->getExtension(),
+          'mime'       => $image->getMimetype(),
+          'size'       => $image->getSize(),
+          'md5'        => $image->getMd5(),
+          'dimensions' => $image->getDimensions()
+      );
+
+
 		$product = new ProductModel($this->db);
 
-		$this->validation->rule('required', ['title', 'short_desc', 'price', 'category_id', 'image']);
+		$this->validation->rule('required', ['title', 'short_desc', 'price', 'category_id']);
 
         $this->validation->labels([
             'title'	       => 'Judul',
@@ -34,13 +54,14 @@ class ProductController extends AbstractController
 		]);
 
 		if ($this->validation->validate()) {
-			$product->createData($request->getParams());
+            $image->upload();
+			$product->add($request->getParams(), $data['name']);
 
 			return $response->withRedirect($this->router
 							->pathFor('product.add'));
 
 			$this->flash->addMessage('succes', 'Data successfully added');
-			
+
 			return $response->withRedirect($this->router
 							->pathFor('product.add'));
 		} else {
@@ -63,7 +84,7 @@ class ProductController extends AbstractController
         $product = new ProductModel($this->db);
         $product_list = $product->getInactive();
         $data['product'] = $product_list;
-        return $this->view->render($response, 'products/list-inactive.twig', 
+        return $this->view->render($response, 'products/list-inactive.twig',
         	$data);
     }
 
@@ -79,6 +100,11 @@ class ProductController extends AbstractController
     {
         $product = new ProductModel($this->db);
         $data['product'] = $product->find('id', $args['id']);
+
+        $category = new CategoryModel($this->db);
+		$categoryAll = $category->getAll();
+		$data['category'] = $categoryAll;
+
         return $this->view->render($response, 'products/edit.twig', $data);
     }
 
