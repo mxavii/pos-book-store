@@ -45,7 +45,7 @@ class Basket
 
 	public function remove($product)
 	{
-		return $this->storage->unset($product['id']);
+		return $this->storage->unset($product);
 	}
 
 	public function clear()
