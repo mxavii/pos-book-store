@@ -58,9 +58,9 @@ class SaleController extends AbstractController
 			 ->rule('numeric', ['be_paid'])
 			 ->message("INPUT MUST NUMBER");
 
-		if ($this->validation->validate()) {
+		if ($this->validation->validate() && !empty($this->basket->all())) {
 			$no_invoice = date('ym') . '000000';
-			
+
 			$no_inv = $order->desc('no_invoice');
 
 			if (!empty($no_inv)) {
@@ -80,14 +80,14 @@ class SaleController extends AbstractController
 
 			// Insert Table OrderItems -----------------------------
 			foreach ($this->basket->all() as $item) {
-	 			$data[] = [
+	 			$dataOrderItem[] = [
 	 				'order_id'		=>	$orderId,
 	 				'product_id'  	=> 	$item['id'], 
 	 				'quantity'	  	=> 	$item['quantity'],
 	 			];
 	 		}
-
-	 		$orderItems->saveToMany($data);
+	 		
+	 		$orderItems->saveToMany($dataOrderItem);
 
 	 		$this->basket->clear();
 
