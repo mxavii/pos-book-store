@@ -24,11 +24,11 @@ class SaleController extends AbstractController
 		$product = new ProductModel($this->db);
 
 		$products = $product->find('id', $args['id']);
-		
+
 		if (!$products) {
 			return $response->withRedirect($this->router->pathFor('sale'));
 		}
-		
+
 		$this->basket->add($products, $args['quantity']);
 
 		return $response->withRedirect($this->router->pathFor('sale'));
@@ -49,7 +49,7 @@ class SaleController extends AbstractController
 	}
 
 	public function pay($request, $response)
-	{	
+	{
 		$order = new Orders($this->db);
 		$orderItems = new OrderItems($this->db);
 
@@ -60,7 +60,7 @@ class SaleController extends AbstractController
 
 		if ($this->validation->validate()) {
 			$no_invoice = date('ym') . '000000';
-
+			
 			$no_inv = $order->desc('no_invoice');
 
 			if (!empty($no_inv)) {
