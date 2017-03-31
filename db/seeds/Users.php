@@ -16,14 +16,14 @@ class Users extends AbstractSeed
     {
         $data[] = [
             'username'  =>  'admin',
-            'password'  =>  sha1('superadmin'),
+            'password'  =>  password_hash('superadmin', PASSWORD_DEFAULT),
             'name'      =>  'Admin',
             'status'    =>  '0',
         ];
         
         $data[] = [
             'username'  =>  'kasir',
-            'password'  =>  sha1('kasir'),
+            'password'  =>  password_hash('kasir', PASSWORD_DEFAULT),
             'name'      =>  'Kasir',
         ];
 

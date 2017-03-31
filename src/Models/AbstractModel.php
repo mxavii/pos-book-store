@@ -6,91 +6,92 @@ namespace App\Models;
 abstract class AbstractModel
 {
 	protected $table;
-	protected $db;
 	protected $column;
+	protected $db;
+	protected $qb;
 
-	public function __construct($db)
+    public function __construct($db)
 	{
-		$this->db = $db;
+        $this->db = $db;
+        $this->qb = $db->createQueryBuilder();
 	}
 
 	public function getAllUser()
 	{
-		$this->db->select('*')
+		$this->qb->select('*')
 				 ->from($this->table)
 				 ->where('deleted = 0 && status = 1');
-		$query = $this->db->execute();
+		$query = $this->qb->execute();
 
 		return $query->fetchAll();
 	}
 
 	public function getAll()
 	{
-		$this->db->select('*')
+		$this->qb->select('*')
 				 ->from($this->table)
 				 ->where('deleted = 0');
-		$query = $this->db->execute();
+		$query = $this->qb->execute();
 
 		return $query->fetchAll();
 	}
 
 	public function getAllTrash()
 	{
-		$this->db->select('*')
+		$this->qb->select('*')
 				 ->from($this->table)
 				 ->where('deleted = 1');
-		$query = $this->db->execute();
+		$query = $this->qb->execute();
 
 		return $query->fetchAll();
 	}	
 
 	public function getInactive()
 	{
-		$this->db->select('*')
+		$this->qb->select('*')
 				 ->from($this->table)
 				 ->where('deleted = 1');
-		$query = $this->db->execute();
+		$query = $this->qb->execute();
 		return $query->fetchAll();
 	}
 
 	public function find($column, $value)
 	{
 		$param = ':'.$column;
-		$this->db
-			 ->select($this->column)
+		$this->qb
+			 ->select('*')
 			 ->from($this->table)
 			 ->setParameter($param, $value)
 			 ->where($column . ' = '. $param);
-		// echo $this->db->getSQL();
-		$result = $this->db->execute();
+		$result = $this->qb->execute();
 		return $result->fetch();
 	}
 
-	public function getById($id)
+	public function desc($column)
 	{
-		$this->db->select('*')
-				 ->from($this->table)
-				 ->where('id = ' . $id . ' AND deleted = 0');
-		$query = $this->db->execute();
-
-		return $query->fetch();
+		$this->qb
+			 ->select($column)
+			 ->from($this->table)
+			 ->orderBy($column, 'DESC')
+			 ->setMaxResults(1);
+		$result = $this->qb->execute();
+		return $result->fetch();
 	}
 
 	public function createData(array $data)
 	{
 		$valuesColumn = [];
 		$valuesData = [];
-			
+	
 		foreach ($data as $dataKey => $dataValue) {
 			$valuesColumn[$dataKey] = ':' . $dataKey;
 			$valuesData[$dataKey] = $dataValue;
 		}
 
-		$this->db->insert($this->table)
+		$this->qb->insert($this->table)
 				 ->values($valuesColumn)
 				 ->setParameters($valuesData)
 				 ->execute();
-
 	}
 
 	public function updateData(array $data, $id)
@@ -98,23 +99,23 @@ abstract class AbstractModel
 		$valuesColumn = [];
 		$valuesData = [];
 
-		$this->db->update($this->table);
+		$this->qb->update($this->table);
 
 		foreach ($data as $dataKey => $dataValue) {
 			$valuesColumn[$dataKey] = ':' . $dataKey;
 			$valuesData[$dataKey] = $dataValue;
 
-			$this->db->set($dataKey, $valuesColumn[$dataKey]);
+			$this->qb->set($dataKey, $valuesColumn[$dataKey]);
 		}
 
-		$this->db->setParameters($valuesData)
+		$this->qb->setParameters($valuesData)
 				 ->where('id = ' . $id)
 				 ->execute();
 	}
 
 	public function softDelete($id)
 	{
-		$this->db->update($this->table)
+		$this->qb->update($this->table)
 				 ->set('deleted', 1)
 				 ->where('id = ' . $id)
 				 ->execute();
@@ -122,7 +123,7 @@ abstract class AbstractModel
 
 	public function restoreData($id)
 	{
-		$this->db->update($this->table)
+		$this->qb->update($this->table)
 				 ->set('deleted', 0)
 				 ->where('id = ' . $id)
 				 ->execute();
@@ -130,11 +131,15 @@ abstract class AbstractModel
 
 	public function hardDelete($id)
 	{	
-		$this->db->delete($this->table)
+		$this->qb->delete($this->table)
 				 ->where('id = ' . $id)
 				 ->execute();
 	}
 
+	public  function __destruct()
+    {
+    	$this->db->close();
+    }
 }
 
 ?>

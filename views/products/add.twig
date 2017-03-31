@@ -48,7 +48,7 @@
 						<div class="col-xs-12 col-sm-6 col-md-7">
 							<div class="form-group {{ errors.price ? 'has-error' : '' }}">
 								<label for="price">Price</label>
-								<input type="number" name="price" id="price" class="form-control">
+								<input type="number" name="price" id="price" value="{{old.price}}" class="form-control">
 								{% if errors.price %}
 								<span class="help-block">{{errors.price | first}}</span>
 								{% endif %}

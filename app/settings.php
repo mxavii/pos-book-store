@@ -6,27 +6,25 @@ return [
 
 		// Setting Dababase
 		'db' => [
-			'host'	=>	'localhost',
-			'user'	=>	'root',
-			'pass'	=>	'mustaqim',
-			'name'	=>	'db_pos',
+			'host' => 'localhost',
+			'user' => 'root',
+			'pass' => 'mustaqim',
+			'name' => 'db_pos',
 		],
 
 		// Setting View
 		'view' => [
-			'path'	=>	__DIR__ . '/../views',
-			'twig'	=> 	[
-				'cache'	=>	false,
-			]
+			'path' => __DIR__ . '/../views',
+			'twig' => [
+				'cache' => false,
+			],
 		],
 
 		// Setting Valadasi
 		'lang' => [
-			'default'	=>	'en',
+			'default' => 'en',
 		],
-
-
-	]
+	],
 ];
 
 ?>

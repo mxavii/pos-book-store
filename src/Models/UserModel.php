@@ -10,17 +10,13 @@ class UserModel  extends AbstractModel
 
 	public function addUser(array $data)
 	{
-
 		$data = [
 			'username' => $data['username'],
 			'name'     => $data['name'],
 			'password' => password_hash($data['password'], PASSWORD_DEFAULT),
-		
-
 		];
 
 		$this->createData($data);
-		var_dump($this->createData);
 	}
 
 	public function checkDuplicate($username, $password)

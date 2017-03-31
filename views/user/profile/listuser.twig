@@ -34,12 +34,14 @@
 
 			         <a href="{{path_for('user.edit' , {('id'): data.id})}}" data-toggle="tooltip" data-placement="top" title=" Edit Data" ><i class="fa fa-edit"></i></a> &nbsp;
 
-					<a href="" data-toggle="tooltip" data-placement="top" title=" Preview" ><i class="fa fa-eye"></i></a>
+					{# <a href="" data-toggle="tooltip" data-placement="top" title=" Preview" ><i class="fa fa-eye"></i></a> #}
 					
 			    </td>
 			</tr>
 			{% endfor %}
 	    	</table>
+	    	<a href="#" class="btn btn-warning pull-right" onclick="window.print()"><i class="fa fa-print"></i> Print </a>
+
 	    </div>
 	</div>
 </div>
