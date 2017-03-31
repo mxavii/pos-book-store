@@ -17,69 +17,70 @@ $app->group('', function () use ($app,$namespace) {
 	$app->get('/home', $namespace . '\HomeController:index')->setName('home');
 
 	// Product ----------------------------------------------------------------
-	$app->get('/product/add', 
+	$app->get('/product/add',
 		$namespace . '\CategoryController:getAllCategory')
 		->setName('product.add');
 	$app->post('/product/add',
 		$namespace . '\ProductController:postAdd')
 		->setName('product.add.post');
 
-	$app->get('/product', 
+	$app->get('/product',
 		$namespace . '\ProductController:getActiveProduct')
 		->setName('product.active');
 
-	$app->get('/product/inactive', 
+	$app->get('/product/inactive',
 		$namespace . '\ProductController:getInactiveProduct')
 		->setName('product.inactive');
-	$app->post('/product/active', 
+	$app->post('/product/active',
 		$namespace . '\ProductController:setInactive')
 		->setName('product.set.inactive');
 
-	$app->post('/product/list/muldel', 
+	$app->post('/product/list/muldel',
 		$namespace . '\ProductController:setDelete')
 		->setName('product.inactive.post');
 
-	$app->get('/product/list/activated/{id}', 
-		$namespace . '\ProductController:setActive');
+	$app->get('/product/list/activated/{id}',
+		$namespace . '\ProductController:setActive')
+		->setName('product.activated');
 
 	$app->get('/product/list/edit/{id}',
 		$namespace . '\ProductController:getEdit')
 		->setName('product.edit');
-	$app->post('/product/list/edit/{id}', 
+	$app->post('/product/list/edit/{id}',
 		$namespace . '\ProductController:setUpdate')
 		->setName('product.edit.post');
 
 	// Category ---------------------------------------------------------------
-	$app->get('/category/listcategory', 
+	$app->get('/category/listcategory',
 		$namespace . '\CategoryController:getAll')
 		->setName('category.listcategory');
 
-	$app->get('/category/del/{id}', 
+	$app->get('/category/del/{id}',
 		$namespace . '\CategoryController:softDelete')
 		->setName('category.del');
 
-	$app->get('/category/addcategory', 
+	$app->get('/category/addcategory',
 		$namespace . '\CategoryController:getAddCategory')
 		->setName('category.addcategory');
-	$app->post('/category/addcategory', 
+	$app->post('/category/addcategory',
 		$namespace . '\CategoryController:postAddCategory');
 
-	$app->get('/category/trashcategory', 
+	$app->get('/category/trashcategory',
 		$namespace . '\CategoryController:getAllTrash')
 		->setName('category.trashcategory');
 
-	$app->get('/category/delete/{id}', 
+	$app->get('/category/delete/{id}',
 		$namespace . '\CategoryController:hardDelete')
 		->setName('category.delete');
 
-	$app->get('/category/restore/{id}', 
+	$app->get('/category/restore/{id}',
 		$namespace . '\CategoryController:restoreData')
 		->setName('category.restore');
 
-	$app->get('/category/edit/{id}', 
+	$app->get('/category/edit/{id}',
 		$namespace . '\CategoryController:getEditCategory')
 		->setName('category.edit');
-	$app->post('/category/edit/{id}', 
+	$app->post('/category/edit/{id}',
 		$namespace . '\CategoryController:postEditCategory')
 		->setName('category.edit.post');
 
@@ -98,33 +99,33 @@ $app->group('', function () use ($app,$namespace) {
 	// Router Profile ---------------------------------------------------------
 	$app->get('/user/profile', $namespace . '\UserController:getProfile')
 		->setName('user.profile');
-	$app->get('/user/admin', $namespace . '\ProfileController:getAdmin')
+	$app->get('/user/admin', $namespace . '\UserController:getAdmin')
 		->setName('user.admin');
 
 	// Router ListUser --------------------------------------------------------
-	$app->get('/user/listuser', 
-		$namespace . '\ProfileController:getProfileUser')
+	$app->get('/user/listuser',
+		$namespace . '\UserController:getProfileUser')
 		->setName('user.listuser');
-	$app->get('/user/del/{id}', $namespace . '\ProfileController:softDelete')
+	$app->get('/user/del/{id}', $namespace . '\UserController:softDelete')
 		->setName('user.del');
-	$app->get('/user/edit/{id}', $namespace . '\ProfileController:getEditUser')
+	$app->get('/user/edit/{id}', $namespace . '\UserController:getEditUser')
 		->setName('user.edit');
-	$app->post('/user/edit/{id}', 
-		$namespace . '\ProfileController:postEditUser')
+	$app->post('/user/edit/{id}',
+		$namespace . '\UserController:postEditUser')
 		->setName('user.edit.post');
 
 	// Router Add User --------------------------------------------------------
-	$app->get('/user/adduser', $namespace . '\ProfileController:getAddUser')
+	$app->get('/user/adduser', $namespace . '\UserController:getAddUser')
 		->setName('user.adduser');
-	$app->post('/user/adduser', $namespace . '\ProfileController:postAddUser');
+	$app->post('/user/adduser', $namespace . '\UserController:postAddUser');
 
 	// Router get trash user --------------------------------------------------
-	$app->get('/user/trashuser', $namespace . '\ProfileController:getAllTrash')
+	$app->get('/user/trashuser', $namespace . '\UserController:getAllTrash')
 		->setName('user.trashuser');
-	$app->get('/user/delete/{id}', 
-		$namespace . '\ProfileController:hardDelete')->setName('user.delete');
-	$app->get('/user/restore/{id}', 
-		$namespace . '\ProfileController:restoreData')
+	$app->get('/user/delete/{id}',
+		$namespace . '\UserController:hardDelete')->setName('user.delete');
+	$app->get('/user/restore/{id}',
+		$namespace . '\UserController:restoreData')
 		->setName('user.restore');
 
 })->add(new AdminMiddleware($container));

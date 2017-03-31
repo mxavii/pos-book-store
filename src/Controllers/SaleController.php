@@ -24,11 +24,11 @@ class SaleController extends AbstractController
 		$product = new ProductModel($this->db);
 
 		$products = $product->find('id', $args['id']);
-		
+
 		if (!$products) {
 			return $response->withRedirect($this->router->pathFor('sale'));
 		}
-		
+
 		$this->basket->add($products, $args['quantity']);
 
 		return $response->withRedirect($this->router->pathFor('sale'));
@@ -49,7 +49,7 @@ class SaleController extends AbstractController
 	}
 
 	public function pay($request, $response)
-	{	
+	{
 		$order = new Orders($this->db);
 		$orderItems = new OrderItems($this->db);
 
@@ -63,7 +63,7 @@ class SaleController extends AbstractController
 		foreach ($this->basket->all() as $item) {
  			$data[] = [
  				'order_id'		=>	$orderId,
- 				'product_id'  	=> 	$item['id'], 
+ 				'product_id'  	=> 	$item['id'],
  				'quantity'	  	=> 	$item['quantity'],
  			];
  		}

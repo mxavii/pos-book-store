@@ -44,7 +44,7 @@ abstract class AbstractModel
 		$query = $this->qb->execute();
 
 		return $query->fetchAll();
-	}	
+	}
 
 	public function getInactive()
 	{
@@ -71,7 +71,7 @@ abstract class AbstractModel
 	{
 		$valuesColumn = [];
 		$valuesData = [];
-	
+
 		foreach ($data as $dataKey => $dataValue) {
 			$valuesColumn[$dataKey] = ':' . $dataKey;
 			$valuesData[$dataKey] = $dataValue;
@@ -116,10 +116,10 @@ abstract class AbstractModel
 				 ->set('deleted', 0)
 				 ->where('id = ' . $id)
 				 ->execute();
-	}	
+	}
 
 	public function hardDelete($id)
-	{	
+	{
 		$this->qb->delete($this->table)
 				 ->where('id = ' . $id)
 				 ->execute();

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Controllers;
 
@@ -9,7 +9,7 @@ class UserController extends AbstractController
 	public function getProfile( $request,  $response)
 	{
 		$user = new UserModel($this->db);
-		
+
 		return $this->view->render($response, 'user/profile.twig');
 	}
 	// Controller Get SignOut
@@ -39,12 +39,12 @@ class UserController extends AbstractController
 			return $response->withRedirect($this->router
 							->pathFor('user.signin'));
 		} else {
-			if (password_verify($request->getParam('password'), 
+			if (password_verify($request->getParam('password'),
 				$login['password'])) {
 
 				$_SESSION['user'] = $login;
 
-				if ($_SESSION['user']['status'] == 0) {	
+				if ($_SESSION['user']['status'] == 0) {
 					$this->flash->addMessage('succes', 'Congratulations you have successfully logged in as admin');
 					return $response->withRedirect($this->router
 									->pathFor('home'));
@@ -54,13 +54,13 @@ class UserController extends AbstractController
 						return $response->withRedirect($this->router
 										->pathFor('user.signin'));
 					}
-				}	
+				}
 			} else {
 				$this->flash->addMessage('warning', ' Password is not registered');
 				return $response->withRedirect($this->router
-								->pathFor('user.signin'));	
+								->pathFor('user.signin'));
 			}
-		} 
+		}
 	}
 
 	public function softDelete( $request,  $response, $args)
@@ -70,7 +70,7 @@ class UserController extends AbstractController
 		$sofDelete = $user->softDelete($args['id']);
 		return $response->withRedirect($this->router
 						->pathFor('user.listuser'));
-	}	
+	}
 
 	public function restoreData( $request,  $response, $args)
 	{
@@ -79,7 +79,7 @@ class UserController extends AbstractController
 		$sofDelete = $user->restoreData($args['id']);
 		return $response->withRedirect($this->router
 						->pathFor('user.trashuser'));
-	}		
+	}
 
 	public function hardDelete( $request,  $response, $args)
 	{
@@ -88,7 +88,7 @@ class UserController extends AbstractController
 		$sofDelete = $user->hardDelete($args['id']);
 		return $response->withRedirect($this->router
 						->pathFor('user.trashuser'));
-	}	
+	}
 
 	public function getEditUser( $request,  $response, $args)
 	{
@@ -98,9 +98,9 @@ class UserController extends AbstractController
 
 		$data['profile'] = $profile;
 
-		return $this->view->render($response, 'user/profile/edituser.twig', 
+		return $this->view->render($response, 'user/profile/edituser.twig',
 			$data);
-	}		
+	}
 
 	public function postEditUser( $request, $response, $args)
 	{
@@ -108,8 +108,8 @@ class UserController extends AbstractController
 
 		$this->validation
 			 ->rule('required', [
-			 	'username', 
-			 	'password', 
+			 	'username',
+			 	'password',
 			 	'name'
 			 ])
 			 ->message('{field} must not be empty')
@@ -119,22 +119,22 @@ class UserController extends AbstractController
 
 		$this->validation
 			 ->rule('lengthMax', [
-			 	'username', 
-			 	'name', 
+			 	'username',
+			 	'name',
 			 	'password'
 			 ], 30);
 
 		$this->validation
 			 ->rule('lengthMin', [
-					'username', 
-					'name', 
+					'username',
+					'name',
 					'password'
 			 ], 5);
 
 		if ($this->validation->validate()) {
 
 		$user->updateData($request->getParams(), $args['id']);
-	
+
 		return $response->withRedirect($this->router
 						->pathFor('user.listuser'));
 
@@ -155,7 +155,7 @@ class UserController extends AbstractController
 	public function getProfileUser( $request, $response)
 	{
 		$user = new UserModel($this->db);
-	
+
 		$datauser = $user->getAllUser();
 		$data['apa'] = $datauser;
 		return $this->view->render($response, 'user/profile/listuser.twig', $data);
@@ -173,11 +173,11 @@ class UserController extends AbstractController
 	public function getAllTrash( $request, $response)
 	{
 		$user = new UserModel($this->db);
-	
+
 		$datauser = $user->getAllTrash();
 		$data['trash'] = $datauser;
 
-		return $this->view->render($response, 'user/profile/trash.twig', 
+		return $this->view->render($response, 'user/profile/trash.twig',
 			$data);
 	}
 
@@ -191,7 +191,7 @@ class UserController extends AbstractController
 	public function postAddUser( $request, $response)
 	{
 		$user = new UserModel($this->db);
-	
+
 		$this->validation
 			 ->rule('required', ['username', 'password', 'name'])
 			 ->message('{field} must not be empty')
@@ -202,15 +202,15 @@ class UserController extends AbstractController
 
 		$this->validation
 			 ->rule('lengthMax', [
-			 	'username', 
-			 	'name', 
+			 	'username',
+			 	'name',
 			 	'password'
 			 ], 30);
 
 		$this->validation
 			 ->rule('lengthMin', [
-			 	'username', 
-			 	'name', 
+			 	'username',
+			 	'name',
 			 	'password'
 			 ], 5);
 
@@ -231,7 +231,7 @@ class UserController extends AbstractController
 				return $response->withRedirect($this->router
 								->pathFor('user.adduser'));
 			}
-			
+
 			$this->flash->addMessage('info');
 
 			return $response->withRedirect($this->router
