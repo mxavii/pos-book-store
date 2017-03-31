@@ -91,8 +91,8 @@ class SaleController extends AbstractController
 
 	 		$this->basket->clear();
 
-			return $response->withRedirect($this->router->pathFor('invoice', [
-				'no_invoice' => $no_invoice]));
+			return $response->withRedirect($this->router->pathFor('noInvoice',
+				['no_invoice' => $no_invoice]));
 		} else {
 			$_SESSION['errors'] = $this->validation->errors();
 

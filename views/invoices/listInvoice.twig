@@ -1,0 +1,45 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} List Invoice {% endblock %}	
+ 
+{% block headContent %} LIST INVOICE {% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-xs-12">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<table id="example2" class="table table-bordered table-striped text-center table-hover">
+		    <thead>
+				<tr>
+			    	<th>No Invoice</th>
+					<th>Operator</th>
+			        <th>Date</th>
+					<th>Total</th>
+					<th>Option</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+		    	{% for invoice in invoices %}
+		        <tr>
+					<td>
+						<a href="{{ path_for('noInvoice', {('no_invoice') 
+							: invoice.no_invoice}) }}">{{invoice.no_invoice}}
+						</a>
+					</td>
+				    <td>{{invoice.name}}</td>
+				    <td>{{invoice.create_at | date('d / m / Y')}}</td>
+				    <td>{{invoice.total_paid | number_format}} IDR</td>
+				    <td>
+				    	<a href="#" title="Remove Data" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o"></i></a>
+						<a href="#" data-toggle="tooltip" data-placement="top" title=" Preview" ><i class="fa fa-eye"></i></a>
+				    </td>
+				</tr>
+				{% endfor %}
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}

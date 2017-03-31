@@ -99,8 +99,12 @@ $app->group('', function () use ($app,$namespace) {
 		->setName('sale.discard');
 
 	// Invoice ----------------------------------------------------------------
-	$app->get('/sale/invoice/{no_invoice}', $namespace . '\InvoiceController:getInvoice')
+	$app->get('/invoice', $namespace . '\InvoiceController:index')
 		->setName('invoice');
+	$app->get('/invoice/trash', $namespace . '\InvoiceController:getAllTrash')
+		->setName('trash.invoice');
+	$app->get('/invoice/{no_invoice}', 
+		$namespace . '\InvoiceController:getInvoice')->setName('noInvoice');
 
 	// Router Profile ---------------------------------------------------------
 	$app->get('/user/profile', $namespace . '\UserController:getProfile')
