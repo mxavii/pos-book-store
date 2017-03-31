@@ -43,7 +43,7 @@
 				<span class="h5 text-danger">{{ errors.be_paid | last}}</span>
 			</div>
 			<hr>
-			<button class="btn btn-success btn-block btn-lg">PAY</button>
+			<button class="btn btn-success btn-block btn-lg" {{ basket.all is empty ? 'disabled' : '' }}>PAY</button>
 		</form>
 	</div>
 </div>
