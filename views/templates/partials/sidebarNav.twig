@@ -3,16 +3,15 @@
         <div class="pull-left image">
             <img src="http://koolkampus.co.in/wp-content/uploads/2014/02/admin.png" class="img-circle" alt="User Image">
         </div>
-        {% if user %}
         <div class="pull-left info">
             <p>{{user.name}}</p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online
             </a>
         </div>
     </div>
-
     <ul class="sidebar-menu">
         <li class="header">NAVIGATION MENU</li>
+
         <li class="treeview">
             <a href="{{path_for('home')}}"><i class="fa ion-ios-speedometer fa-lg"></i>
             <span>HOME</span></a>
@@ -21,6 +20,9 @@
             <a href="{{path_for('sale')}}"><i class="fa ion-cube fa-lg"></i>
             <span>SALE</span></a>
         </li>
+    
+        {% if user.status == 1 %}
+    {% else %}
         <li class="treeview">
             <a href="#"><i class="fa ion-ios-keypad fa-lg"></i>
                 <span>PRODUCT</span>
@@ -59,6 +61,7 @@
                 <li><a href="{{path_for('user.adduser')}}">ADD USER</a></li>
                 <li><a href="{{path_for('user.trashuser')}}">TRASH</a></li>
             </ul>
+    {% endif %}
         <li>
         <li class="treeview">
             <a href="#"><i class="fa ion-ios-list fa-lg"></i>
@@ -80,6 +83,5 @@
     </li>   
 </ul>
 
-    {% endif %}
 
 </section>

@@ -1,49 +1,50 @@
 {% extends 'templates/default.twig' %}
 
 {% block title %} POS | Point Of Sale {% endblock %}
-{% block headContent %} Product Inactive <i style="color:red" class="fa fa-trash-o"></i>
+
+{% block headContent %} 
+	Product Inactive <i style="color:red" class="fa fa-trash-o"></i>
 {% endblock %}
 
 {% block content %}
 
-<section class="content">
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="panel panel-default">
-				<form action="{{ path_for('product.inactive.post') }}" method="POST">
-					<div class="panel-body">
-						<table id="example2" class="table table-bordered table-striped table-hover">
-							<thead>
-								<tr>
-									<th>Title</th>
-									<th>Description</th>
-									<th>Price</th>
-									<th>Image</th>
-									<th style="width: 40px">Restore</th>
-									<th style="width: 40px">Delete</th>
-								</tr>
-							</thead>
-							{% for product in product %}
+<div class="row">
+	<div class="col-xs-12">
+		<div class="panel panel-default">
+			<form action="{{ path_for('product.inactive.post') }}" 
+				method="POST">
+				<div class="panel-body">
+					<table id="example2" class="table table-bordered table-striped table-hover">
+						<thead>
 							<tr>
-								<td>{{ product.title }}</td>
-								<td>{{ product.price }}</td>
-								<td>{{ product.short_desc }}</td>
-								<td><img src="{{ base_url() }}/assets/image/{{ product.image }}" width="100" height="100"></td>
-								<td class="text-center"><a href="{{ base_url() }}/product/list/activated/{{ product.id }}"><i class="fa fa-repeat" aria-hidden="true"></i></a></td>
-								<td class="text-center"><input type="checkbox" name="product[]" value="{{ product.id }}"></td>
+								<th>Title</th>
+								<th>Description</th>
+								<th>Price</th>
+								<th>Image</th>
+								<th style="width: 40px">Restore</th>
+								<th style="width: 40px">Delete</th>
 							</tr>
-							{% endfor %}
-						</table>
-						<hr style="margin-top:10px;margin-bottom:0px;" >
-					</div>
-					<div class="panel-body" align="right">
-						<button type="submit" name="button"  class="btn btn-danger"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete</button>
-						<hr style="margin-top:13px;margin-bottom:1px;">
-					</form>
+						</thead>
+						{% for product in product %}
+						<tr>
+							<td>{{ product.title }}</td>
+							<td>{{ product.price }}</td>
+							<td>{{ product.short_desc }}</td>
+							<td><img src="{{ base_url() }}/assets/image/{{ product.image }}" width="100" height="100"></td>
+							<td class="text-center"><a href="{{ base_url() }}/product/list/activated/{{ product.id }}"><i class="fa fa-repeat" aria-hidden="true"></i></a></td>
+							<td class="text-center"><input type="checkbox" name="product[]" value="{{ product.id }}"></td>
+						</tr>
+						{% endfor %}
+					</table>
+					<hr style="margin-top:10px;margin-bottom:0px;" >
 				</div>
+				<div class="panel-body" align="right">
+					<button type="submit" name="button"  class="btn btn-danger"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete</button>
+					<hr style="margin-top:13px;margin-bottom:1px;">
+				</form>
 			</div>
 		</div>
 	</div>
-</section>
+</div>
 
 {% endblock %}

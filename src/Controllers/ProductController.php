@@ -2,9 +2,6 @@
 
 namespace App\Controllers;
 
-
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 use App\Models\ProductModel;
 use App\Models\CategoryModel;
 
@@ -15,12 +12,12 @@ class ProductController extends AbstractController
 		return $this->view->render($response, 'products/list.twig');
 	}
 
-    public function getAdd(Request $request, Response $response)
+    public function getAdd($request, $response)
     {
         return $this->view->render($response, 'products/add.twig');
     }
 
-    public function postAdd(Request $request, Response $response)
+    public function postAdd($request, $response)
 	{
         $storage = new \Upload\Storage\FileSystem('assets/image');
         $image = new \Upload\File('image',$storage);
@@ -72,14 +69,14 @@ class ProductController extends AbstractController
 		}
     }
 
-    public function getActiveProduct(Request $request, Response $response, $arg)
+    public function getActiveProduct($request, $response, $arg)
     {
         $product = new ProductModel($this->db);
         $data['product'] = $product->getAll();
         return $this->view->render($response, 'products/list-active.twig', $data);
     }
 
-    public function getInactiveProduct(Request $request, Response $response, $arg)
+    public function getInactiveProduct($request, $response, $arg)
     {
         $product = new ProductModel($this->db);
         $product_list = $product->getInactive();
@@ -88,7 +85,7 @@ class ProductController extends AbstractController
         	$data);
     }
 
-    public function setActive(Request $request, Response $response, $args)
+    public function setActive($request, $response, $args)
 	{
 		$product = new ProductModel($this->db);
 		$product_restore = $product->restoreData($args['id']);
@@ -96,7 +93,7 @@ class ProductController extends AbstractController
 						->pathFor('product.inactive'));
 	}
 
-    public function getEdit(Request $request, Response $response, $args)
+    public function getEdit($request, $response, $args)
     {
         $product = new ProductModel($this->db);
         $data['product'] = $product->find('id', $args['id']);
@@ -108,7 +105,7 @@ class ProductController extends AbstractController
         return $this->view->render($response, 'products/edit.twig', $data);
     }
 
-    public function setUpdate(Request $request, Response $response, $args)
+    public function setUpdate($request, $response, $args)
 	{
 		$product = new ProductModel($this->db);
 
@@ -132,7 +129,7 @@ class ProductController extends AbstractController
 		}
     }
 
-    public function setDelete(Request $request, Response $response)
+    public function setDelete($request, $response)
 	{
          foreach ($request->getParam('product') as $key => $value) {
             $product = new ProductModel($this->db);
@@ -143,7 +140,7 @@ class ProductController extends AbstractController
 						->pathFor('product.inactive'));
 	}
 
-    public function setInactive(Request $request, Response $response)
+    public function setInactive($request, $response)
 	{
          foreach ($request->getParam('inactive') as $key => $value) {
             $product = new ProductModel($this->db);

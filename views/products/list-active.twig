@@ -7,44 +7,42 @@
 
 {% block content %}
 
-<section class="content">
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<form action="{{ path_for('product.set.inactive') }}" method="POST">
-						<table id="example2" class="table table-bordered table-striped table-hover">
-							<thead>
-								<tr>
-									<th>Title</th>
-									<th>Description</th>
-									<th>Price</th>
-									<th>Image</th>
-									<th style="width: 40px">Edit</th>
-									<th style="width: 40px">Delete</th>
-								</tr>
-							</thead>
-							{% for product in product %}
+<div class="row">
+	<div class="col-xs-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form action="{{ path_for('product.set.inactive') }}" method="POST">
+					<table id="example2" class="table table-bordered table-striped table-hover">
+						<thead>
 							<tr>
-								<td>{{ product.title }}</td>
-								<td>{{ product.price }}</td>
-								<td>{{ product.short_desc }}</td>
-								<td><img src="{{ base_url() }}/assets/image/{{ product.image }}" width="100" height="100"></td>
-								<td class="text-center"><a href="{{ path_for('product.edit', { ('id'):product.id }) }}"><i class="fa fa-pencil"></i></a></td>
-								<td class="text-center"><input type="checkbox" name="inactive[]" value="{{ product.id }}"></td>
+								<th>Title</th>
+								<th>Description</th>
+								<th>Price</th>
+								<th>Image</th>
+								<th style="width: 40px">Edit</th>
+								<th style="width: 40px">Delete</th>
 							</tr>
-							{% endfor %}
-						</table>
-						<hr style="margin-top:10px;margin-bottom:10px;" >
-					</div>
-					<div class="panel-body" align="right">
-						<button type="submit" name="active"  class="btn btn-warning"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Send to trash</button>
-						<hr style="margin-top:10px;margin-bottom:10px;" >
-					</form>
+						</thead>
+						{% for product in product %}
+						<tr>
+							<td>{{ product.title }}</td>
+							<td>{{ product.price }}</td>
+							<td>{{ product.short_desc }}</td>
+							<td><img src="{{ base_url() }}/assets/image/{{ product.image }}" width="100" height="100"></td>
+							<td class="text-center"><a href="{{ path_for('product.edit', { ('id'):product.id }) }}"><i class="fa fa-pencil"></i></a></td>
+							<td class="text-center"><input type="checkbox" name="inactive[]" value="{{ product.id }}"></td>
+						</tr>
+						{% endfor %}
+					</table>
+					<hr style="margin-top:10px;margin-bottom:10px;" >
 				</div>
+				<div class="panel-body" align="right">
+					<button type="submit" name="active"  class="btn btn-warning"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Send to trash</button>
+					<hr style="margin-top:10px;margin-bottom:10px;" >
+				</form>
 			</div>
 		</div>
 	</div>
-</section>
+</div>
 
 {% endblock %}

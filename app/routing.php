@@ -15,7 +15,6 @@ $app->get('/user/signout', $namespace . '\UserController:getSignOut')
 
 $app->group('', function () use ($app,$namespace) {
 	$app->get('/home', $namespace . '\HomeController:index')->setName('home');
-
 	// Product ----------------------------------------------------------------
 	$app->get('/product/add',
 		$namespace . '\CategoryController:getAllCategory')
@@ -23,6 +22,7 @@ $app->group('', function () use ($app,$namespace) {
 	$app->post('/product/add',
 		$namespace . '\ProductController:postAdd')
 		->setName('product.add.post');
+
 
 	$app->get('/product',
 		$namespace . '\ProductController:getActiveProduct')
@@ -38,7 +38,6 @@ $app->group('', function () use ($app,$namespace) {
 	$app->post('/product/list/muldel',
 		$namespace . '\ProductController:setDelete')
 		->setName('product.inactive.post');
-
 	$app->get('/product/list/activated/{id}',
 		$namespace . '\ProductController:setActive')
 		->setName('product.activated');
@@ -49,7 +48,6 @@ $app->group('', function () use ($app,$namespace) {
 	$app->post('/product/list/edit/{id}',
 		$namespace . '\ProductController:setUpdate')
 		->setName('product.edit.post');
-
 	// Category ---------------------------------------------------------------
 	$app->get('/category/listcategory',
 		$namespace . '\CategoryController:getAll')
@@ -68,11 +66,9 @@ $app->group('', function () use ($app,$namespace) {
 	$app->get('/category/trashcategory',
 		$namespace . '\CategoryController:getAllTrash')
 		->setName('category.trashcategory');
-
 	$app->get('/category/delete/{id}',
 		$namespace . '\CategoryController:hardDelete')
 		->setName('category.delete');
-
 	$app->get('/category/restore/{id}',
 		$namespace . '\CategoryController:restoreData')
 		->setName('category.restore');
@@ -83,7 +79,6 @@ $app->group('', function () use ($app,$namespace) {
 	$app->post('/category/edit/{id}',
 		$namespace . '\CategoryController:postEditCategory')
 		->setName('category.edit.post');
-
 	// Sale -------------------------------------------------------------------
 	$app->get('/sale', $namespace . '\SaleController:index')
 		->setName('sale');
@@ -91,14 +86,12 @@ $app->group('', function () use ($app,$namespace) {
 	$app->get('/sale/pay', $namespace . '\SaleController:pay')
 		->setName('sale.pay');
 	$app->post('/sale/pay', $namespace . '\SaleController:pay');
-
 	$app->get('/sale/add/{id}/{quantity}', $namespace . '\SaleController:add')
 		->setName('sale.add');
 	$app->get('/sale/delete/{id}', $namespace . '\SaleController:remove')
 		->setName('sale.del.id');
 	$app->get('/sale/clear', $namespace . '\SaleController:clear')
 		->setName('sale.discard');
-
 	// Invoice ----------------------------------------------------------------
 	$app->get('/invoice', $namespace . '\InvoiceController:index')
 		->setName('invoice');
@@ -106,13 +99,11 @@ $app->group('', function () use ($app,$namespace) {
 		->setName('trash.invoice');
 	$app->get('/invoice/{no_invoice}', 
 		$namespace . '\InvoiceController:getInvoice')->setName('noInvoice');
-
 	// Router Profile ---------------------------------------------------------
 	$app->get('/user/profile', $namespace . '\UserController:getProfile')
 		->setName('user.profile');
 	$app->get('/user/admin', $namespace . '\UserController:getAdmin')
 		->setName('user.admin');
-
 	// Router ListUser --------------------------------------------------------
 	$app->get('/user/listuser', 
 		$namespace . '\UserController:getProfileUser')
@@ -122,15 +113,10 @@ $app->group('', function () use ($app,$namespace) {
 	$app->get('/user/edit/{id}', $namespace . '\UserController:getEditUser')
 		->setName('user.edit');
 
-	$app->post('/user/edit/{id}',
-		$namespace . '\UserController:postEditUser')
-		->setName('user.edit.post');
-
 	// Router Add User --------------------------------------------------------
 	$app->get('/user/adduser', $namespace . '\UserController:getAddUser')
 		->setName('user.adduser');
 	$app->post('/user/adduser', $namespace . '\UserController:postAddUser');
-
 	// Router get trash user --------------------------------------------------
 	$app->get('/user/trashuser', $namespace . '\UserController:getAllTrash')
 		->setName('user.trashuser');
@@ -139,5 +125,4 @@ $app->group('', function () use ($app,$namespace) {
 	$app->get('/user/restore/{id}',
 		$namespace . '\UserController:restoreData')
 		->setName('user.restore');
-
 })->add(new AdminMiddleware($container));
