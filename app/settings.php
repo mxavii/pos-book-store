@@ -10,6 +10,10 @@ return [
 			'user' => 'root',
 			'pass' => 'mustaqim',
 			'name' => 'db_pos',
+			'host'	=>	'localhost',
+			'user'	=>	'root',
+			'pass'	=>	'mustaqim',
+			'name'	=>	'db_pos',
 		],
 
 		// Setting View
@@ -25,6 +29,7 @@ return [
 			'default' => 'en',
 		],
 	],
+	
 ];
 
 ?>
