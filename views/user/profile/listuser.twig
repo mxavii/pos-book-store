@@ -3,44 +3,40 @@
 
 {% block headContent %} List User <a href="" style="color:green"><i class="fa fa-list"></i></a>{% endblock %}
 
-	{% block content %}
-			<section class="content">
-				<div class="row">
+{% block content %}
+
+<div class="row">
 	<div class="col-xs-12">
-    <div class="panel panel-default">
-	    <div class="panel-body">
-	    	<table id="example2" class="table table-bordered table-striped table-hover">
-	    		
-	    <thead>
-			<tr>
-		    	<th class="col-md-1 text-center">No</th>
-				<th>Name</th>
-		        <th>Username</th>
-				<th>Start Registration </th>
-				<th>Option</th>
-		     </tr>
-	        	</thead>
-	    </thead>
-	    <tbody>
-	    	{% for data in apa %}
-	    	{% set i = i + 1 %}
-	         <tr>
-			   <td class="text-center">{{i}}</td>
-			    <td>{{data.name}}</td>
-			    <td>{{data.username}}</td>
-			    <td>{{data.create_at}}</td>
-			    <td>
-			         <a href="{{path_for('user.del' , {('id'): data.id})}}" title=" Remove Data" style="color:red" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o"></i></a></button>
-
-			         <a href="{{path_for('user.edit' , {('id'): data.id})}}" data-toggle="tooltip" data-placement="top" title=" Edit Data" ><i class="fa fa-edit"></i></a> &nbsp;
-
-					<a href="" data-toggle="tooltip" data-placement="top" title=" Preview" ><i class="fa fa-eye"></i></a>
-					
-			    </td>
-			</tr>
-			{% endfor %}
-	    	</table>
-	    </div>
+    	<div class="panel panel-default">
+	    	<div class="panel-body">
+				<table id="example2" class="table table-bordered table-striped table-hover">
+					<thead>
+						<tr>
+					    	<th class="col-md-1 text-center">No</th>
+							<th>Name</th>
+					        <th>Username</th>
+							<th>Start Registration </th>
+							<th>Option</th>
+					     </tr>
+				    </thead>
+			    <tbody>
+			    {% for data in apa %}
+			    	{% set i = i + 1 %}
+			         <tr>
+					   <td class="text-center">{{i}}</td>
+					    <td>{{data.name}}</td>
+					    <td>{{data.username}}</td>
+					    <td>{{data.create_at}}</td>
+					    <td>
+					    <a href="{{path_for('user.del' , {('id'): data.id})}}" title=" Remove Data" style="color:red" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o"></i></a></button>
+					    <a href="{{path_for('user.edit' , {('id'): data.id})}}" data-toggle="tooltip" data-placement="top" title=" Edit Data" ><i class="fa fa-edit"></i></a>
+						</td>
+					</tr>
+				</tbody>
+			    {% endfor %}
+			    </table>
+			</div>
+		</div>
 	</div>
 </div>
-	{% endblock %}
+{% endblock %}

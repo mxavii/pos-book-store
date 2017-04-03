@@ -5,6 +5,7 @@
 {% block headContent %} LIST INVOICE {% endblock %}
 
 {% block content %}
+
 <div class="row">
 <div class="col-xs-12">
 	<div class="panel panel-default">
@@ -31,8 +32,7 @@
 				    <td>{{invoice.create_at | date('d / m / Y')}}</td>
 				    <td>{{invoice.total_paid | number_format}} IDR</td>
 				    <td>
-				    	<a href="#" title="Remove Data" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o"></i></a>
-						<a href="#" data-toggle="tooltip" data-placement="top" title=" Preview" ><i class="fa fa-eye"></i></a>
+				    	<a href="{{ path_for('invoice.softdel', {id:invoice.id}) }}" title="Remove Data" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o fa-lg"></i></a>
 				    </td>
 				</tr>
 				{% endfor %}

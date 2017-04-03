@@ -19,7 +19,7 @@ environments:
         host: localhost
         name: db_pos
         user: root
-        pass: 'root'
+        pass: 'mustaqim'
         port: 3306
         charset: utf8
 
