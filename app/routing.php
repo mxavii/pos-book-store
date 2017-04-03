@@ -47,6 +47,7 @@ $app->group('', function () use ($app,$namespace) {
 	$app->post('/product/list/edit/{id}',
 		$namespace . '\ProductController:setUpdate')
 		->setName('product.edit.post');
+
 	// Category ---------------------------------------------------------------
 	$app->get('/category/listcategory',
 		$namespace . '\CategoryController:getAll')
@@ -81,7 +82,7 @@ $app->group('', function () use ($app,$namespace) {
 	// Sale -------------------------------------------------------------------
 	$app->get('/sale', $namespace . '\SaleController:index')
 		->setName('sale');
-	
+
 	$app->get('/sale/pay', $namespace . '\SaleController:pay')
 		->setName('sale.pay');
 	$app->post('/sale/pay', $namespace . '\SaleController:pay');
@@ -94,9 +95,13 @@ $app->group('', function () use ($app,$namespace) {
 	// Invoice ----------------------------------------------------------------
 	$app->get('/invoice', $namespace . '\InvoiceController:index')
 		->setName('invoice');
-	$app->get('/invoice/del/{id}', $namespace . '\InvoiceController:softDelete')
+
+	$app->get('/invoice/trash', $namespace . '\InvoiceController:getAllTrash')
+		->setName('trash.invoice');
+	$app->get('/invoice/del/{id}', 
+		$namespace . '\InvoiceController:softDelete')
 		->setName('invoice.softdel');
-	$app->get('/invoice/{no_invoice}', 
+	$app->get('/invoice/{no_invoice}',
 		$namespace . '\InvoiceController:getInvoice')->setName('noInvoice');
 	// Router Profile ---------------------------------------------------------
 	$app->get('/user/profile', $namespace . '\UserController:getProfile')
@@ -104,7 +109,7 @@ $app->group('', function () use ($app,$namespace) {
 	$app->get('/user/admin', $namespace . '\UserController:getAdmin')
 		->setName('user.admin');
 	// Router ListUser --------------------------------------------------------
-	$app->get('/user/listuser', 
+	$app->get('/user/listuser',
 		$namespace . '\UserController:getProfileUser')
 		->setName('user.listuser');
 	$app->get('/user/del/{id}', $namespace . '\UserController:softDelete')

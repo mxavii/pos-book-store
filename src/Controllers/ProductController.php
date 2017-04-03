@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+
 use App\Models\ProductModel;
 use App\Models\CategoryModel;
 
@@ -36,7 +37,6 @@ class ProductController extends AbstractController
           'md5'        => $image->getMd5(),
           'dimensions' => $image->getDimensions()
         );
-
 
 		$product = new ProductModel($this->db);
 
@@ -109,7 +109,7 @@ class ProductController extends AbstractController
 	{
 		$product = new ProductModel($this->db);
 
-        $this->validation->rule('required', ['title', 'short_desc', 'price', 'category_id', 'image']);
+        $this->validation->rule('required', ['title', 'short_desc', 'price', 'category_id']);
 
         $this->validation->labels([
             'title'	       => 'Judul',
@@ -120,9 +120,37 @@ class ProductController extends AbstractController
 		]);
 
 		if ($this->validation->validate()) {
-			$product->updateData($request->getParams(), $args['id']);
-			return $response->withRedirect($this->router->pathFor('product.active'));
-		} else {
+            if (!empty($_FILES['image']['name'])) {
+                $storage = new \Upload\Storage\FileSystem('assets/image');
+                $image = new \Upload\File('image',$storage);
+                $image->setName(uniqid());
+                $image->addValidations(array(
+                    new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+                    'image/jpg', 'image/jpeg')),
+                    new \Upload\Validation\Size('5M')
+                ));
+
+                $data = array(
+                  'name'       => $image->getNameWithExtension(),
+                  'extension'  => $image->getExtension(),
+                  'mime'       => $image->getMimetype(),
+                  'size'       => $image->getSize(),
+                  'md5'        => $image->getMd5(),
+                  'dimensions' => $image->getDimensions()
+                );
+
+                $image->upload();
+
+                $product->update($request->getParams(), $data['name'], $args['id']);
+
+            } else {
+
+                $product->updateData($request->getParams(), $args['id']);
+            }
+
+            return $response->withRedirect($this->router->pathFor('product.active'));
+
+        } else {
 			$_SESSION['old'] = $request->getParams();
 			$_SESSION['errors'] = $this->validation->errors();
 			return $response->withRedirect($this->router->pathFor('product.edit', ['id' => $args['id']]));
