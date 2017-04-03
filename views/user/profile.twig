@@ -1,51 +1,60 @@
 {% extends 'templates/default.twig' %}
 
 {% block title %} Profile User {% endblock %}
-	{% block headContent %} Admin Profile  {% endblock %}
+
+{% block headContent %} Admin Profile  {% endblock %}
+
 {% block content %}
 	<div class="box">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-family:impact"> A c c o u n t &nbsp;P r o f i l e</h3>
-
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-              <i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fa fa-times"></i></button>
-          </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                <i class="fa fa-times"></i></button>
+            </div>
         </div>
+
         {% if user %}
+            <div class="box-body">
+                <center> <img src="https://www.finly.io/common/images/landing/how_finly_can_help/admin.png" alt="" ></center>
+            </div>
 
-        <div class="box-body">
-         <center> <img src="https://www.finly.io/common/images/landing/how_finly_can_help/admin.png" alt="" ></center>
-        </div></div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          <b> Username :  </b><strong class="pull-right"><i>{{user.username}}</strong></i>
-      </div>
+            <div class="box-footer">
+                <b> Username : </b><strong class="pull-right">
+                    <i>{{user.username}}</i></strong>
+            </div>
+    		
+            <div class="box-footer">
+                <b> Name : </b><strong class="pull-right">
+                    <i>{{user.name}}</i></strong>
+            </div>  
 
-		<div class="box-footer">
-          <b> Name :  </b><strong class="pull-right"><i>{{user.name}}</strong></i>
-      </div>  
+            <div class="box-footer">
+                <b> Status :  </b><strong class="pull-right">
+                    <i>{{user.name}}</i></strong>
+            </div>    
 
-    <div class="box-footer">
-          <b> Status :  </b><strong class="pull-right"><i>{{user.name}}</strong></i>
-      </div>    
+    		<div class="box-footer">
+                <b> E-mail : </b><strong class="pull-right">
+                    <i>{{user.username}}123@gmail.com</i></strong>
+            </div>  
 
-		<div class="box-footer">
-          <b> E-mail :  </b><strong class="pull-right"><i>{{user.username}}123@gmail.com</strong></i>
-      </div>  
+    		<div class="box-footer">
+                <b> Phone Number :  </b><strong class="pull-right">
+                    <i>+62895-9090-1120</i></strong>
+            </div>      
 
-		<div class="box-footer">
-          <b> Phone Number :  </b><strong class="pull-right"><i>+62895-9090-1120</strong></i>
-      </div>      
-
-		<div class="box-footer">
-          <b> City Addres :  </b><strong class="pull-right"><i>Kota Gede, Yogyakarta , Indonesia.</strong></i>
-      </div> 
-
-		<div class="box-footer">
-          <b> Mulai Bergabung :  </b><strong class="pull-right"><i>{{user.create_at}}</strong></i>
-      </div>                
-	{% endif %}
+    		<div class="box-footer">
+                <b> City Addres :  </b><strong class="pull-right">
+                    <i>Kota Gede, Yogyakarta , Indonesia.</i></strong>
+            </div> 
+    		
+            <div class="box-footer">
+                <b> Mulai Bergabung :  </b><strong class="pull-right">
+                    <i>{{user.create_at}}</i></strong>
+            </div>              
+	    {% endif %}
+    </div>
 {% endblock %}

@@ -112,6 +112,9 @@ $app->group('', function () use ($app,$namespace) {
 		->setName('user.del');
 	$app->get('/user/edit/{id}', $namespace . '\UserController:getEditUser')
 		->setName('user.edit');
+	$app->post('/user/edit/{id}',
+		$namespace . '\CategoryController:postEditCategory')
+		->setName('user.edit.post');
 
 	// Router Add User --------------------------------------------------------
 	$app->get('/user/adduser', $namespace . '\UserController:getAddUser')

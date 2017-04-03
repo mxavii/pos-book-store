@@ -35,7 +35,7 @@ class ProductController extends AbstractController
           'size'       => $image->getSize(),
           'md5'        => $image->getMd5(),
           'dimensions' => $image->getDimensions()
-      );
+        );
 
 
 		$product = new ProductModel($this->db);

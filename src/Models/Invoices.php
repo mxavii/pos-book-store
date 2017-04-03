@@ -29,7 +29,7 @@ class Invoices extends AbstractModel
 			 ->where('o.no_invoice = ' . $no_invoice);
 		$result = $this->qb->execute();
 
-		return $result->fetchAll();
+		return $result->fetch();
 	}
 }
 
