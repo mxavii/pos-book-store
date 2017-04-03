@@ -31,7 +31,7 @@
 							<td>{{ product.price }}</td>
 							<td>{{ product.short_desc }}</td>
 							<td><img src="{{ base_url() }}/assets/image/{{ product.image }}" width="100" height="100"></td>
-							<td class="text-center"><a href="{{ base_url() }}/product/list/activated/{{ product.id }}"><i class="fa fa-repeat" aria-hidden="true"></i></a></td>
+							<td class="text-center"><a href="{{ path_for('product.activated' , {id: product.id }) }}"><i class="fa fa-repeat" aria-hidden="true"></i></a></td>
 							<td class="text-center"><input type="checkbox" name="product[]" value="{{ product.id }}"></td>
 						</tr>
 						{% endfor %}
