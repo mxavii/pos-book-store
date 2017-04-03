@@ -1,0 +1,66 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Invoice {% endblock %}	
+ 
+{% block headContent %} INVOICE {% endblock %}
+
+{% block content %}
+<div class="row ">
+	<div class="col-md-3">
+		<div class="box box-body box-primary">
+			{% set no_invoice, date_order, operator, total_paid, paid 
+				= null, null, null, null, null %}
+			{% for invoice in invoices | slice(0,1) %}
+				{% set no_invoice = invoice.no_invoice %}
+			  	{% set date_order = invoice.create_at | date("d-M-Y | H:i") %}
+			  	{% set operator = invoice.name %}
+			  	{% set total_paid = invoice.total_paid %}
+			  	{% set paid = invoice.be_paid %}
+			{% endfor %}
+
+			<div class="text-center">
+				<h4>POS BOOK STORE</h4>
+				<p>Jl. PADEPOKAN NO.08 KOTABARU</p>
+				<p>Telp. 0274 - 378920</p>
+			</div>
+			<hr>
+				<p class="h4">Faktur Penjualan</p>
+				<p>No. Faktur : {{ no_invoice }}</p>
+				<p>Tanggal    : {{date_order}}</p>
+				<p>Operator   : {{operator}}</p>
+			<hr>
+			{% set subTotal = 0 %}
+			{% for invoice in invoices %}
+			{% set subTotal = invoice.price * invoice.quantity %}
+			    <div class="row">
+				    <div class="col-md-12">{{ invoice.title }}</div>
+				    <div class="col-md-1 text-center">{{ invoice.quantity }}</div>
+				    <div class="col-md-1 text-center">x</div>
+					<div class="col-md-3 text-right">{{ invoice.price |
+						number_format }}</div>
+				    <div class="col-md-6 text-right">{{ subTotal | 
+				    	number_format }}</div>
+			    </div>
+			{% endfor %}
+			<hr>
+			<div class="row">
+				<div class="col-md-6">Harus Bayar</div>
+				<div class="col-md-6 text-right">{{ total_paid |
+					number_format}} IDR</div>
+				<div class="col-md-6">DiBayar</div>
+				<div class="col-md-6 text-right">{{ paid |
+					number_format}} IDR</div>
+				<div class="col-md-6">Kembali</div>
+				{% set refund = paid - total_paid %}
+				<div class="col-md-6 text-right">{{ refund | number_format }} IDR</div>
+			</div>
+			<hr>
+			<div class="text-center">
+				<p>Produk yang sudah dibeli, 
+					<strong>tidak dapat dikembalikan</strong>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

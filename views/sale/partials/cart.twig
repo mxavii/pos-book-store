@@ -35,7 +35,15 @@
 			<h4>TOTAL <span class="pull-right">{{ basket.total | number_format }} IDR</span></h4>
 		</strong>
 		</div>
-		<hr>
-		<a href="{{ path_for('sale.pay') }}" class="btn btn-success btn-block btn-lg {{ basket.total ? '' : 'disabled' }}">PAY</a>
+		<form action="{{ path_for('sale.pay') }}" method="post" 
+			class="box-body">
+			<div class="form-group {{ errors.be_paid ? 'has-error' : '' }}">
+				<input type="text" name="be_paid" class="form-control input-lg"
+					placeholder="MONEY PAID">
+				<span class="h5 text-danger">{{ errors.be_paid | last}}</span>
+			</div>
+			<hr>
+			<button class="btn btn-success btn-block btn-lg" {{ basket.all is empty ? 'disabled' : '' }}>PAY</button>
+		</form>
 	</div>
 </div>

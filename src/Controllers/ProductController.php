@@ -13,12 +13,12 @@ class ProductController extends AbstractController
 		return $this->view->render($response, 'products/list.twig');
 	}
 
-    public function getAdd( $request,  $response)
+    public function getAdd($request, $response)
     {
         return $this->view->render($response, 'products/add.twig');
     }
 
-    public function postAdd( $request,  $response)
+    public function postAdd($request, $response)
 	{
         $storage = new \Upload\Storage\FileSystem('assets/image');
         $image = new \Upload\File('image',$storage);
@@ -36,8 +36,7 @@ class ProductController extends AbstractController
           'size'       => $image->getSize(),
           'md5'        => $image->getMd5(),
           'dimensions' => $image->getDimensions()
-      );
-
+        );
 
 		$product = new ProductModel($this->db);
 
@@ -86,7 +85,7 @@ class ProductController extends AbstractController
         	$data);
     }
 
-    public function setActive( $request,  $response, $args)
+    public function setActive($request, $response, $args)
 	{
 		$product = new ProductModel($this->db);
 		$product_restore = $product->restoreData($args['id']);
@@ -106,20 +105,8 @@ class ProductController extends AbstractController
         return $this->view->render($response, 'products/edit.twig', $data);
     }
 
-    public function getChangeImage($request,
-     $response, $args)
-    {
-        $product = new ProductModel($this->db);
-        $data['product'] = $product->find('id', $args['id']);
-
-        return $this->view->render($response, 'products/change-image.twig', $data);
-    }
-
-
-    public function setUpdate( $request, $response, $args)
+    public function setUpdate($request, $response, $args)
 	{
-        // var_dump($request->getUploadedFiles();
-        // die();
 		$product = new ProductModel($this->db);
 
         $this->validation->rule('required', ['title', 'short_desc', 'price', 'category_id']);
@@ -170,7 +157,7 @@ class ProductController extends AbstractController
 		}
     }
 
-    public function setDelete(Request $request, Response $response)
+    public function setDelete($request, $response)
 	{
          foreach ($request->getParam('product') as $key => $value) {
             $product = new ProductModel($this->db);
@@ -181,7 +168,7 @@ class ProductController extends AbstractController
 						->pathFor('product.inactive'));
 	}
 
-    public function setInactive(Request $request, Response $response)
+    public function setInactive($request, $response)
 	{
          foreach ($request->getParam('inactive') as $key => $value) {
             $product = new ProductModel($this->db);

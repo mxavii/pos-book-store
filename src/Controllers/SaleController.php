@@ -11,9 +11,7 @@ class SaleController extends AbstractController
 	public function index($requests, $response)
 	{
 		$sale = new ProductModel($this->db);
-
 		$products = $sale->getAll();
-
 		return $this->view->render($response, 'sale/index.twig', [
 			'products' => $products
 		]);
@@ -22,7 +20,6 @@ class SaleController extends AbstractController
 	public function add($request, $response, $args)
 	{
 		$product = new ProductModel($this->db);
-
 		$products = $product->find('id', $args['id']);
 
 		if (!$products) {
@@ -30,21 +27,18 @@ class SaleController extends AbstractController
 		}
 
 		$this->basket->add($products, $args['quantity']);
-
 		return $response->withRedirect($this->router->pathFor('sale'));
 	}
 
 	public function remove($request, $response, $args)
 	{
-		$this->basket->remove($args['id']);
-
+		$this->basket->remove($args);
 		return $response->withRedirect($this->router->pathFor('sale'));
 	}
 
 	public function clear($request, $response)
 	{
 		$this->basket->clear();
-
 		return $response->withRedirect($this->router->pathFor('sale'));
 	}
 
@@ -52,25 +46,50 @@ class SaleController extends AbstractController
 	{
 		$order = new Orders($this->db);
 		$orderItems = new OrderItems($this->db);
+		$this->validation
+			 ->rule('required', ['be_paid'])
+			 ->rule('numeric', ['be_paid'])
+			 ->message("INPUT MUST NUMBER");
 
-		// Insert Table Orders ---------------------------------
-		$user_id = $_SESSION['user']['id'];
-		$total_price = $this->basket->total();
+		if ($this->validation->validate() && !empty($this->basket->all())) {
 
-		$orderId = $order->save($user_id, $total_price);
+			$no_invoice = date('ym') . '000000';
+			
+			$no_inv = $order->desc('no_invoice');
 
-		// Insert Table OrderItems -----------------------------
-		foreach ($this->basket->all() as $item) {
- 			$data[] = [
- 				'order_id'		=>	$orderId,
- 				'product_id'  	=> 	$item['id'],
- 				'quantity'	  	=> 	$item['quantity'],
- 			];
- 		}
+			if (!empty($no_inv)) {
+				$no_invoice = $no_inv['no_invoice'];
+				$no_invoice++;
+			}
+			
+			// Insert Table Orders ---------------------------------
+			$dataOrder = [
+				'no_invoice'	=>	(int) $no_invoice,
+				'user_id'		=>	$_SESSION['user']['id'],
+				'total_paid'	=>	$this->basket->total(),
+				'be_paid'		=>	(int) $request->getParam('be_paid'),
+			];
 
- 		$orderItems->saveToMany($data);
+			$orderId = $order->save($dataOrder);
 
-		return $response->withRedirect($this->router->pathFor('sale'));
+			// Insert Table OrderItems -----------------------------
+			foreach ($this->basket->all() as $item) {
+	 			$dataOrderItem[] = [
+	 				'order_id'		=>	$orderId,
+	 				'product_id'  	=> 	$item['id'], 
+	 				'quantity'	  	=> 	$item['quantity'],
+	 			];
+	 		}
+
+	 		$orderItems->saveToMany($dataOrderItem);
+
+	 		$this->basket->clear();
+			return $response->withRedirect($this->router->pathFor('noInvoice',
+				['no_invoice' => $no_invoice]));
+		} else {
+			$_SESSION['errors'] = $this->validation->errors();
+			return $response->withRedirect($this->router->pathFor('sale'));
+		}
 	}
 }
 ?>

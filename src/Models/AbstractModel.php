@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 abstract class AbstractModel
 {
 	protected $table;
@@ -63,6 +62,17 @@ abstract class AbstractModel
 			 ->from($this->table)
 			 ->setParameter($param, $value)
 			 ->where($column . ' = '. $param);
+		$result = $this->qb->execute();
+		return $result->fetch();
+	}
+
+	public function desc($column)
+	{
+		$this->qb
+			 ->select($column)
+			 ->from($this->table)
+			 ->orderBy($column, 'DESC')
+			 ->setMaxResults(1);
 		$result = $this->qb->execute();
 		return $result->fetch();
 	}

@@ -1,7 +1,9 @@
 {% extends 'templates/default.twig' %}
 
 {% block title %} POS | Point Of Sale {% endblock %}
-{% block headContent %} Product Inactive <i style="color:red" class="fa fa-trash-o"></i>
+
+{% block headContent %}
+	Product Inactive <i style="color:red" class="fa fa-trash-o"></i>
 {% endblock %}
 
 {% block content %}
@@ -9,7 +11,9 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="panel panel-default">
+
 			<form action="{{ path_for('product.inactive.post') }}" method="POST">
+
 				<div class="panel-body">
 					<table id="example2" class="table table-bordered table-striped table-hover">
 						<thead>
