@@ -1,0 +1,39 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Add Category {% endblock %}
+
+{% block headContent %} 
+  Add Category <a href=""><i class="fa fa-plus"></i></a> 
+{% endblock %}
+
+{% block content %}
+<form action="{{ path_for('category.addcategory')}}" method="post">
+    <div class="box box-info">
+        <div class="box-header">
+            <center> 
+                <h3 class="box-title" style="font-family:impact"> 
+                    Silahkan Tambah Category
+                </h3>
+            </center>
+        </div>
+        <div class="box-body">          
+            <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+            <label>Name Category:</label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <input type="text" name="name" class="form-control"
+                        value="{{ old.name }}" placeholder="Category Name">
+                </div>
+                {% if errors.name %}
+		  		  <span class="help-block">{{errors.name | first}}</span>
+                {% endif %}
+            </div>         
+        </div>
+        
+        <button type="submit" class="btn btn-default" style="margin:10px"><span class="glyphicon glyphicon-share-alt"></span> Add</button>
+    </div>
+</form>
+
+{% endblock %}	

@@ -1,0 +1,17 @@
+<div class="row">
+	{% for product in products %} 
+		<div class="col-sm-2 col-md-3">
+			<div class="thumbnail">
+				<img src="{{ base_url() }}/assets/image/{{ product.image }}">
+			  	<div class="caption">
+			    	<h4>{{ product.title }}</h4>
+			    	<a href="{{ path_for('sale.add', 
+			    		{id: product.id, quantity: 1}) }}"
+			    		class="btn btn-primary btn-block btn-flat btn-md">
+			    		<b>{{ product.price | number_format() }}</b>
+			    	</a>
+			  	</div>
+			</div>
+	  	</div>
+	{% endfor %}
+</div>

@@ -17,8 +17,8 @@ $container['db'] = function ($c) {
 
 	$connection = \Doctrine\DBAL\DriverManager::getConnection(
 		$connectionParams, $config);
-
-	return $connection->createQueryBuilder();
+	
+	return $connection;
 };
 
 $container['view'] = function ($c) {
@@ -27,21 +27,23 @@ $container['view'] = function ($c) {
 
 	$view->addExtension(new Slim\Views\TwigExtension(
 		$c->router, $c->request->getUri())
-
-
 	);
-
 
 	$view->getEnvironment()->addGlobal('old', @$_SESSION['old']);
 	unset($_SESSION['old']);
-
 	$view->getEnvironment()->addGlobal('errors', @$_SESSION['errors']);
 	unset($_SESSION['errors']);
 
+	$view->getEnvironment()->addGlobal('cart', @$_SESSION['cart']);
+
+	$view->getEnvironment()->addGlobal('basket', $c->get('basket'));
 
 	if (@$_SESSION['user']) {
 		$view->getEnvironment()->addGlobal('user', $_SESSION['user']);
 	}
+
+
+	$view->getEnvironment()->addGlobal('flash', $c->flash);
 
 	return $view;
 };
@@ -54,8 +56,23 @@ $container['validation'] = function ($c) {
 	return new \Valitron\Validator($param, [], $setting['default']);
 };
 
-$ccontainer['flash'] = function ($c) {
+$container['flash'] = function ($c) {
 	return new \Slim\Flash\Messages;
-}
+};
+
+$container['storage'] = function ($c) {
+	return new \App\Core\Storage\SessionStorage();
+};
+
+$container['product'] = function ($c) {
+	return new \App\Models\ProductModel($c->get('db'));
+};
+
+$container['basket'] = function ($c) {
+	return new \App\Basket\Basket(
+		$c->get('storage'),
+		$c->get('product')
+	);
+};
 
 ?>

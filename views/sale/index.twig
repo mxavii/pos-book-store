@@ -1,0 +1,16 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Sale Product {% endblock %}
+
+{% block headContent %} Sale Product {% endblock %}
+
+{% block content %}
+    <div class="row">
+		<div class="col-md-8">
+			<div class="panel box-body">
+				{% include 'sale/partials/products.twig' %}
+			</div>
+		</div>
+		{% include 'sale/partials/cart.twig' %}
+    </div>
+{% endblock %}

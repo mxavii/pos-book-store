@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="shortcut icon" href="(http://app.unbounce.com/favicon.ico)"/>
-    <link href="https://cdn1.iconfinder.com/data/icons/map-objects/154/map-object-user-login-man-point-256.png" rel="shortcut icon" type="image/x-icon" /> 	
+    <link href="http://www.clker.com/cliparts/I/X/0/Q/S/4/admin-button-icon-hi.png" rel="shortcut icon" type="image/x-icon" /> 	
     <title>{% block title %}{% endblock %}</title>
     
  	<meta charset="utf-8">
@@ -14,27 +14,25 @@
 	
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootflat/2.0.4/css/bootflat.min.css" rel="stylesheet">
 
-      {# material form link #}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+     {# material form link #}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
 
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-	
-</head>
-<body style="background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAFfKj/FAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF4OXp8PX50NXZBLxR6QAAAEhJREFUeNpiYGJgYGACCCAGMAAIIDiDCSCAGLAAgABCEcbBBAggGIORQhogwNCcwIjddKgQI6ojUbkgWSYMo+BCjKiOR9PLBAAchAAxHFDBbwAAAABJRU5ErkJggg==')">
+  	<!-- Compiled and minified JavaScript -->
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+	</head>
 
-		<div class="container">
+	<body style="background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAFfKj/FAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF4OXp8PX50NXZBLxR6QAAAEhJREFUeNpiYGJgYGACCCAGMAAIIDiDCSCAGLAAgABCEcbBBAggGIORQhogwNCcwIjddKgQI6ojUbkgWSYMo+BCjKiOR9PLBAAchAAxHFDBbwAAAABJRU5ErkJggg==')">
+
+	<div class="container">
+	{% include 'templates/partials/flash.twig' %}
 			{% block content %} 
 	
-	
 			{% endblock %}
+	</div>
+	{# {% include 'templates/partials/footer.twig' %} #}
 
-		</div>
-		{# {% include 'templates/partials/footer.twig' %}	 #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.jss"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script>
-
-   
-</body>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+   </body>
 </html>

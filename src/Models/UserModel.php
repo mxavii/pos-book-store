@@ -6,17 +6,14 @@ class UserModel  extends AbstractModel
 {
 
 	protected $table = 'users';
-	protected $column = ['username', 'password'];
+	protected $column = ['id', 'username', 'password', 'name', 'create_at', 'status'];
 
-	public function signUp(array $data)
+	public function addUser(array $data)
 	{
-
 		$data = [
 			'username' => $data['username'],
 			'name'     => $data['name'],
 			'password' => password_hash($data['password'], PASSWORD_DEFAULT),
-		
-
 		];
 
 		$this->createData($data);
@@ -33,5 +30,6 @@ class UserModel  extends AbstractModel
 		}
 		return false;
 	}
+
 }
 
