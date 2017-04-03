@@ -49,7 +49,9 @@ $app->group('', function () use ($app,$namespace) {
 	$app->post('/product/list/edit/{id}',
 		$namespace . '\ProductController:setUpdate')
 		->setName('product.edit.post');
-
+	$app->get('/product/list/changeimage/{id}',
+		$namespace . '\ProductController:getChangeImage')
+		->setName('product.change.image');
 	// Category ---------------------------------------------------------------
 	$app->get('/category/listcategory',
 		$namespace . '\CategoryController:getAll')

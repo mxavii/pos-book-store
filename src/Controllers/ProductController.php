@@ -3,8 +3,6 @@
 namespace App\Controllers;
 
 
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 use App\Models\ProductModel;
 use App\Models\CategoryModel;
 
@@ -15,12 +13,12 @@ class ProductController extends AbstractController
 		return $this->view->render($response, 'products/list.twig');
 	}
 
-    public function getAdd(Request $request, Response $response)
+    public function getAdd( $request,  $response)
     {
         return $this->view->render($response, 'products/add.twig');
     }
 
-    public function postAdd(Request $request, Response $response)
+    public function postAdd( $request,  $response)
 	{
         $storage = new \Upload\Storage\FileSystem('assets/image');
         $image = new \Upload\File('image',$storage);
@@ -72,14 +70,14 @@ class ProductController extends AbstractController
 		}
     }
 
-    public function getActiveProduct(Request $request, Response $response, $arg)
+    public function getActiveProduct($request, $response, $arg)
     {
         $product = new ProductModel($this->db);
         $data['product'] = $product->getAll();
         return $this->view->render($response, 'products/list-active.twig', $data);
     }
 
-    public function getInactiveProduct(Request $request, Response $response, $arg)
+    public function getInactiveProduct($request, $response, $arg)
     {
         $product = new ProductModel($this->db);
         $product_list = $product->getInactive();
@@ -88,7 +86,7 @@ class ProductController extends AbstractController
         	$data);
     }
 
-    public function setActive(Request $request, Response $response, $args)
+    public function setActive( $request,  $response, $args)
 	{
 		$product = new ProductModel($this->db);
 		$product_restore = $product->restoreData($args['id']);
@@ -96,7 +94,7 @@ class ProductController extends AbstractController
 						->pathFor('product.inactive'));
 	}
 
-    public function getEdit(Request $request, Response $response, $args)
+    public function getEdit($request, $response, $args)
     {
         $product = new ProductModel($this->db);
         $data['product'] = $product->find('id', $args['id']);
@@ -108,11 +106,23 @@ class ProductController extends AbstractController
         return $this->view->render($response, 'products/edit.twig', $data);
     }
 
-    public function setUpdate(Request $request, Response $response, $args)
+    public function getChangeImage($request,
+     $response, $args)
+    {
+        $product = new ProductModel($this->db);
+        $data['product'] = $product->find('id', $args['id']);
+
+        return $this->view->render($response, 'products/change-image.twig', $data);
+    }
+
+
+    public function setUpdate( $request, $response, $args)
 	{
+        // var_dump($request->getUploadedFiles();
+        // die();
 		$product = new ProductModel($this->db);
 
-        $this->validation->rule('required', ['title', 'short_desc', 'price', 'category_id', 'image']);
+        $this->validation->rule('required', ['title', 'short_desc', 'price', 'category_id']);
 
         $this->validation->labels([
             'title'	       => 'Judul',
@@ -123,9 +133,37 @@ class ProductController extends AbstractController
 		]);
 
 		if ($this->validation->validate()) {
-			$product->updateData($request->getParams(), $args['id']);
-			return $response->withRedirect($this->router->pathFor('product.active'));
-		} else {
+            if (!empty($_FILES['image']['name'])) {
+                $storage = new \Upload\Storage\FileSystem('assets/image');
+                $image = new \Upload\File('image',$storage);
+                $image->setName(uniqid());
+                $image->addValidations(array(
+                    new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+                    'image/jpg', 'image/jpeg')),
+                    new \Upload\Validation\Size('5M')
+                ));
+
+                $data = array(
+                  'name'       => $image->getNameWithExtension(),
+                  'extension'  => $image->getExtension(),
+                  'mime'       => $image->getMimetype(),
+                  'size'       => $image->getSize(),
+                  'md5'        => $image->getMd5(),
+                  'dimensions' => $image->getDimensions()
+                );
+
+                $image->upload();
+
+                $product->update($request->getParams(), $data['name'], $args['id']);
+
+            } else {
+
+                $product->updateData($request->getParams(), $args['id']);
+            }
+
+            return $response->withRedirect($this->router->pathFor('product.active'));
+
+        } else {
 			$_SESSION['old'] = $request->getParams();
 			$_SESSION['errors'] = $this->validation->errors();
 			return $response->withRedirect($this->router->pathFor('product.edit', ['id' => $args['id']]));
