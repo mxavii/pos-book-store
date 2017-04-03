@@ -22,8 +22,7 @@ $app->group('', function () use ($app,$namespace) {
 	$app->post('/product/add',
 		$namespace . '\ProductController:postAdd')
 		->setName('product.add.post');
-
-
+		
 	$app->get('/product',
 		$namespace . '\ProductController:getActiveProduct')
 		->setName('product.active');
@@ -96,8 +95,12 @@ $app->group('', function () use ($app,$namespace) {
 	// Invoice ----------------------------------------------------------------
 	$app->get('/invoice', $namespace . '\InvoiceController:index')
 		->setName('invoice');
+
 	$app->get('/invoice/trash', $namespace . '\InvoiceController:getAllTrash')
 		->setName('trash.invoice');
+	$app->get('/invoice/del/{id}', 
+		$namespace . '\InvoiceController:softDelete')
+		->setName('invoice.softdel');
 	$app->get('/invoice/{no_invoice}',
 		$namespace . '\InvoiceController:getInvoice')->setName('noInvoice');
 	// Router Profile ---------------------------------------------------------

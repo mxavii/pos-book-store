@@ -8,10 +8,11 @@ class Invoices extends AbstractModel
 
 	public function allInvoice()
 	{
-		$this->qb->select('o.no_invoice', 'o.create_at', 'u.name',
+		$this->qb->select('o.id', 'o.no_invoice', 'o.create_at', 'u.name',
 			'o.total_paid', 'o.be_paid')
 			 ->from($this->table[0], 'o')
-			 ->leftJoin('o', $this->table[1], 'u', 'u.id = o.user_id');
+			 ->leftJoin('o', $this->table[1], 'u', 'u.id = o.user_id')
+			 ->where('o.deleted = 0');
 		$result = $this->qb->execute();
 
 		return $result->fetchAll();
@@ -29,7 +30,14 @@ class Invoices extends AbstractModel
 			 ->where('o.no_invoice = ' . $no_invoice);
 		$result = $this->qb->execute();
 
-		return $result->fetch();
+		return $result->fetchAll();
+	}
+
+	public function softDel($id)
+	{
+		$this->table = 'orders';
+		
+		$this->softDelete($id);
 	}
 }
 
