@@ -4,9 +4,10 @@ namespace App\Controllers;
 
 use App\Models\CategoryModel;
 
-class CategoryController extends AbstractController {
-
-	public function getAllCategory($request, $response) {
+class CategoryController extends AbstractController 
+{
+	public function getAllCategory($request, $response) 
+	{
 		$category = new CategoryModel($this->db);
 		$categoryAll = $category->getAll();
 		$data['category'] = $categoryAll;
@@ -14,7 +15,8 @@ class CategoryController extends AbstractController {
 		return $this->view->render($response, 'products/add.twig', $data);
 	}
 
-	public function getAll($request, $response) {
+	public function getAll($request, $response) 
+	{
 		$category = new CategoryModel($this->db);
 		$categoryAll = $category->getAll();
 		$data['category'] = $categoryAll;
@@ -22,21 +24,21 @@ class CategoryController extends AbstractController {
 		return $this->view->render($response, 'category/data.twig', $data);
 	}
 
-	public function softDelete($request, $response, $args) {
+	public function softDelete($request, $response, $args) 
+	{
 		$user = new CategoryModel($this->db);
 		$sofDelete = $user->softDelete($args['id']);
 		return $response->withRedirect($this->router->pathFor('category.listcategory'));
 	}
 
-	public function getAddCategory($request, $response) {
-
+	public function getAddCategory($request, $response) 
+	{
 		return $this->view->render($response, 'category/addcategory.twig');
-
 	}
 
 	// Controller Post SignUp
-	public function postAddCategory($request, $response) {
-
+	public function postAddCategory($request, $response) 
+	{
 		$user = new CategoryModel($this->db);
 		$this->validation->rule('required', ['name'])->message('{field} must not be empty')->label('Category');
 
@@ -46,8 +48,7 @@ class CategoryController extends AbstractController {
 
 			$user->createData($request->getParams());
 
-			$this->flash->addMessage('succes', ' Data successfully added
- 		 ');
+			$this->flash->addMessage('succes', ' Data successfully added');
 
 			return $response->withRedirect($this->router->pathFor('category.listcategory'));
 
@@ -62,13 +63,11 @@ class CategoryController extends AbstractController {
 				$this->flash->addMessage('error', 'Please fill out the form correctly');
 				return $response->withRedirect($this->router->pathFor('category.addcategory'));
 			}
-
 		}
-
 	}
 
-	public function getAllTrash($request, $response) {
-
+	public function getAllTrash($request, $response)
+	{
 		$category = new CategoryModel($this->db);
 		$trashcategory = $category->getAllTrash();
 		$data['trashcategory'] = $trashcategory;
@@ -76,19 +75,22 @@ class CategoryController extends AbstractController {
 		return $this->view->render($response, 'category/trash.twig', $data);
 	}
 
-	public function restoreData($request, $response, $args) {
+	public function restoreData($request, $response, $args) 
+	{
 		$category = new CategoryModel($this->db);
 		$sofDelete = $category->restoreData($args['id']);
 		return $response->withRedirect($this->router->pathFor('category.trashcategory'));
 	}
 
-	public function hardDelete($request, $response, $args) {
+	public function hardDelete($request, $response, $args) 
+	{
 		$category = new CategoryModel($this->db);
 		$sofDelete = $category->hardDelete($args['id']);
 		return $response->withRedirect($this->router->pathFor('category.trashcategory'));
 	}
 
-	public function getEditCategory($request, $response, $args) {
+	public function getEditCategory($request, $response, $args) 
+	{
 		$categori = new CategoryModel($this->db);
 		$category = $categori->find('id', $args['id']);
 
@@ -98,7 +100,8 @@ class CategoryController extends AbstractController {
 
 	}
 
-	public function postEditCategory($request, $response, $args) {
+	public function postEditCategory($request, $response, $args) 
+	{
 		$category = new CategoryModel($this->db);
 
 		// var_dump($args['id']);
@@ -125,8 +128,8 @@ class CategoryController extends AbstractController {
 				$this->flash->addMessage('error', 'Please fill out the form correctly');
 				return $response->withRedirect($this->router->pathFor('category.edit', ['id' => $args['id']]));
 			}
-
 		}
 	}
-
 }
+
+?>

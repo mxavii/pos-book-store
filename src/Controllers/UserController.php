@@ -135,6 +135,7 @@ class UserController extends AbstractController
 				'name',
 				'password',
 			], 5);
+			
 			if ($this->validation->validate()) {
 				$user->updateData($request->getParams(), $args['id']);
 				return $response->withRedirect($this->router

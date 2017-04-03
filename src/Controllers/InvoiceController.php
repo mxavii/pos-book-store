@@ -13,6 +13,7 @@ class InvoiceController extends AbstractController
 		return $this->view->render($response, 'invoices/listInvoice.twig', 
 			$data);
 	}
+	
 	public function getInvoice($request, $response, $args)
 	{
 		$inv = new Invoices($this->db);
