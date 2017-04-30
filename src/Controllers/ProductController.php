@@ -41,7 +41,8 @@ class ProductController extends AbstractController
 		$product = new ProductModel($this->db);
 
 		$this->validation->rule('required', ['title', 'short_desc', 'price', 'category_id']);
-
+        var_dump($this->validation);
+                die();
         $this->validation->labels([
             'title'	       => 'Judul',
 			'short_desc'   => 'Deskripsi',
